@@ -1,15 +1,10 @@
 <template>
-  <div class="center">
-    <a href="">
-      <img alt="Vue logo" src="../assets/logo.png" />
-      <h1>MediaDB</h1>
-    </a>
-  </div>
+  <div class="center"></div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "Menu",
   props: {
     msg: String,
   },
