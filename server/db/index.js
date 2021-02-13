@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 
 let mediadb = {};
 
-mediadb.all = () => {
+mediadb.getAll = () => {
   return new Promise((resolve, reject) => {
     pool.query(`SELECT * FROM medien`, (err, results) => {
       if (err) {
@@ -22,7 +22,7 @@ mediadb.all = () => {
   });
 };
 
-mediadb.one = (id) => {
+mediadb.getOne = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(`SELECT * FROM medien WHERE medien_id = ?`, id, (err, results) => {
       if (err) {
