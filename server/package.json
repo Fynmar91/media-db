@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch src --exec npm run server",
-    "server": "node src/app.js",
-    "lint": "eslint **/*.js"
+    "server": "node server.js",
+    "lint": "eslint **/*.js",
+    "dev": "npx nodemon server.js -w ./"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.7"
   },
   "devDependencies": {
