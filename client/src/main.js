@@ -1,6 +1,6 @@
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootswatch/dist/slate/bootstrap.min.css";
+import "bootswatch/dist/superhero/bootstrap.min.css";
 
 import { createApp } from "vue";
 import App from "./App.vue";

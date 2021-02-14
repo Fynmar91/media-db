@@ -1,0 +1,105 @@
+<template>
+  <div>
+    <div class="row justify-content-center w-100 mt-3">
+      <router-link to="/list" tag="button" class="btn btn-primary" style="width: 100%; max-width: 600px;"
+        >Liste</router-link
+      >
+    </div>
+    <div class="row justify-content-center w-100 mt-3">
+      <div class="card mb-3 mx-3" style="width: 600px;">
+        <div class="card-header" style="clear: both">
+          <h3 style="float: left;">{{ type || "Leer" }}</h3>
+          <h5 class="text-danger" style="float: right;">{{ status || "Leer" }}</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ media.name }}</h5>
+          <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
+        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="d-block user-select-none"
+          width="100%"
+          height="200"
+          aria-label="Placeholder: Image cap"
+          focusable="false"
+          role="img"
+          preserveAspectRatio="xMidYMid slice"
+          viewBox="0 0 318 180"
+          style="font-size:1.125rem;text-anchor:middle"
+        >
+          <rect width="100%" height="100%" fill="#868e96"></rect>
+          <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+        </svg>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ media.year }}</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="card-link">Eintrag</a>
+        </div>
+        <div class="card-footer text-muted">
+          {{ media.created }}
+        </div>
+      </div>
+
+      <div class="card h-100" style="width: 600px;">
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <a href="#" class="card-link">Öffnen</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "Menu",
+  props: {
+    id: null,
+  },
+  data() {
+    return {
+      media: JSON,
+      type_id: null,
+      status_id: null,
+      type: "",
+      status: "",
+    };
+  },
+  mounted() {
+    axios
+      .get("http://localhost:8181/api/media/" + this.id)
+      .then((response) => {
+        this.media = response.data;
+        this.name = this.media.name;
+        this.type_id = this.media.type;
+        this.status_id = this.media.status;
+        axios
+          .get("http://localhost:8181/api/types/" + this.type_id)
+          .then((response) => {
+            this.type = response.data.name;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        axios
+          .get("http://localhost:8181/api/status/" + this.status_id)
+          .then((response) => {
+            this.status = response.data.name;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped></style>

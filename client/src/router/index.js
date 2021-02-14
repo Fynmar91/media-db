@@ -1,16 +1,24 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Welcome from "@/views/Welcome.vue";
+import Menu from "@/views/Menu.vue";
+import List from "@/views/List.vue";
+import Media from "@/views/Media.vue";
 
 const routes = [
   {
+    name: "Menu",
     path: "/",
-    name: "Welcome",
-    component: Welcome,
+    component: Menu,
   },
   {
-    path: "/menu",
-    name: "Menu",
-    component: Welcome,
+    name: "List",
+    path: "/list",
+    component: List,
+  },
+  {
+    name: "Media",
+    path: "/media/:id",
+    component: Media,
+    props: true,
   },
 ];
 
