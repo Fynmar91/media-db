@@ -4,8 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "node server.js",
-    "lint": "eslint **/*.js",
     "dev": "npx nodemon server.js -w ./"
   },
   "keywords": [],
@@ -19,8 +17,5 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7"
   },
-  "devDependencies": {
-    "eslint": "^7.20.0",
-    "eslint-plugin-vue": "^7.5.0"
-  }
+  "devDependencies": {}
 }

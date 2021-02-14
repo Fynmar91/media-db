@@ -36,6 +36,18 @@ mediadb.getOne = (id) => {
   });
 };
 
+//insert
+mediadb.insert = (media) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`INSERT INTO media (name, year, type, status) VALUES (?, ?, ?, ?)`, media, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
 //set status
 mediadb.setStatus = (id, status) => {
   return new Promise((resolve, reject) => {

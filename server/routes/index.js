@@ -50,8 +50,14 @@ router.delete("/media/delete/:id", async (req, res) => {
 //insert
 router.post("/media/insert/", async (req, res) => {
   try {
-    let results = await db.one();
-    res.json(results);
+    console.log(req.body);
+    let media = [];
+    media[0] = req.body.name;
+    media[1] = req.body.year;
+    media[2] = req.body.type;
+    media[3] = req.body.status;
+    await db.insert(media);
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
