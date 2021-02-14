@@ -36,6 +36,18 @@ mediadb.getOne = (id) => {
   });
 };
 
+//set status
+mediadb.setStatus = (id, status) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`UPDATE media SET status = ? WHERE media_id = ?`, [status, id], (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
 //Types
 //get all types
 mediadb.getTypes = (id) => {

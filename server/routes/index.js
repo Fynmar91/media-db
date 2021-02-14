@@ -58,6 +58,17 @@ router.post("/media/insert/", async (req, res) => {
   }
 });
 
+//update status
+router.put("/media/update/status/:id/:status", async (req, res) => {
+  try {
+    await db.setStatus(req.params.id, req.params.status);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 //Type
 //select all types
 router.get("/types/", async (req, res) => {

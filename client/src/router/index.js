@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Menu from "@/views/Menu.vue";
 import List from "@/views/List.vue";
 import Media from "@/views/Media.vue";
+import Add from "@/views/Add.vue";
 
 const routes = [
   {
@@ -18,6 +19,12 @@ const routes = [
     name: "Media",
     path: "/media/:id",
     component: Media,
+    props: true,
+  },
+  {
+    name: "Add",
+    path: "/add",
+    component: Add,
     props: true,
   },
 ];

@@ -7,9 +7,26 @@
     </div>
     <div class="row justify-content-center w-100 mt-3">
       <div class="card mb-3 mx-3" style="width: 600px;">
-        <div class="card-header" style="clear: both">
+        <div class="card-header" style="clear: both" @dblclick="click_status">
           <h3 style="float: left;">{{ type || "Leer" }}</h3>
-          <h5 class="text-danger" style="float: right;">{{ status || "Leer" }}</h5>
+          <div>
+            <select
+              v-if="edit_status"
+              @change="change_status($event)"
+              class="custom-select col-4"
+              style="float: right;"
+            >
+              <option
+                v-for="item in statuses"
+                :key="item.status_id"
+                :value="item.status_id"
+                :selected="item.status_id == media.status"
+              >
+                {{ item.name }}</option
+              >
+            </select>
+            <h5 v-else class="text-danger" style="float: right;">{{ status || "Leer" }}</h5>
+          </div>
         </div>
         <div class="card-body">
           <h5 class="card-title">{{ media.name }}</h5>
@@ -67,36 +84,71 @@ export default {
       status_id: null,
       type: "",
       status: "",
+      statuses: JSON,
+      edit_status: false,
     };
   },
+  methods: {
+    click_status: function() {
+      this.edit_status = !this.edit_status;
+    },
+    change_status(event) {
+      if (event.target.value != this.media.status) {
+        axios
+          .put("http://localhost:8181/api/media/update/status/" + this.media.media_id + "/" + event.target.value)
+          .then((response) => {
+            if (response.status == 200) {
+              this.update();
+            } else {
+              console.log(response);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      this.click_status();
+    },
+    update: function() {
+      axios
+        .get("http://localhost:8181/api/media/" + this.id)
+        .then((response) => {
+          this.media = response.data;
+          this.name = this.media.name;
+          this.type_id = this.media.type;
+          this.status_id = this.media.status;
+          axios
+            .get("http://localhost:8181/api/types/" + this.type_id)
+            .then((response) => {
+              this.type = response.data.name;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          axios
+            .get("http://localhost:8181/api/status/" + this.status_id)
+            .then((response) => {
+              this.status = response.data.name;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          axios
+            .get("http://localhost:8181/api/status/")
+            .then((response) => {
+              this.statuses = response.data;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
   mounted() {
-    axios
-      .get("http://localhost:8181/api/media/" + this.id)
-      .then((response) => {
-        this.media = response.data;
-        this.name = this.media.name;
-        this.type_id = this.media.type;
-        this.status_id = this.media.status;
-        axios
-          .get("http://localhost:8181/api/types/" + this.type_id)
-          .then((response) => {
-            this.type = response.data.name;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-        axios
-          .get("http://localhost:8181/api/status/" + this.status_id)
-          .then((response) => {
-            this.status = response.data.name;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.update();
   },
 };
 </script>
