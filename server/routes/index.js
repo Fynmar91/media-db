@@ -75,9 +75,20 @@ router.put("/media/update/status/:id/:status", async (req, res) => {
   }
 });
 
+//update type
+router.put("/media/update/type/:id/:type", async (req, res) => {
+  try {
+    await db.setType(req.params.id, req.params.type);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 //Type
 //select all types
-router.get("/types/", async (req, res) => {
+router.get("/type/", async (req, res) => {
   try {
     let results = await db.getTypes();
     res.json(results);
@@ -88,7 +99,7 @@ router.get("/types/", async (req, res) => {
 });
 
 //select type
-router.get("/types/:type", async (req, res) => {
+router.get("/type/:type", async (req, res) => {
   try {
     let results = await db.getType(req.params.type);
     res.json(results);

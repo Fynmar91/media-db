@@ -99,7 +99,7 @@ export default {
           console.log(error);
         });
       axios
-        .get("http://localhost:8181/api/types/")
+        .get("http://localhost:8181/api/type/")
         .then((response) => {
           this.types = response.data;
         })

@@ -3,7 +3,7 @@
     <div class="row justify-content-center w-100 mt-5">
       <router-link to="/">
         <img alt="Vue logo" src="../assets/logo.png" />
-        <h1>MediaDB</h1>
+        <h1 class="text-center">MediaDB</h1>
       </router-link>
     </div>
     <div class="row justify-content-center w-100">

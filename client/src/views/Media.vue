@@ -7,27 +7,44 @@
     </div>
     <div class="row justify-content-center w-100 mt-3">
       <div class="card mb-3 mx-3" style="width: 600px;">
-        <div class="card-header" style="clear: both" @dblclick="click_status">
-          <h3 style="float: left;">{{ type || "Leer" }}</h3>
-          <div>
-            <select
-              v-if="edit_status"
-              @change="change_status($event)"
-              class="custom-select col-4"
-              style="float: right;"
-            >
-              <option
-                v-for="item in statuses"
-                :key="item.status_id"
-                :value="item.status_id"
-                :selected="item.status_id == media.status"
+        <div class="row mx-0" style="width: 600px;">
+          <div class="col-6 card-header" style="clear: both" @dblclick="click_type">
+            <div>
+              <select v-if="edit_type" @change="change_type($event)" class="custom-select col-8">
+                <option
+                  v-for="item in types"
+                  :key="item.type_id"
+                  :value="item.type_id"
+                  :selected="item.type_id == media.type"
+                >
+                  {{ item.name }}</option
+                >
+              </select>
+              <h3 v-else style="float: left;">{{ type || "Leer" }}</h3>
+            </div>
+          </div>
+          <div class="col-6 card-header" style="clear: both" @dblclick="click_status">
+            <div>
+              <select
+                v-if="edit_status"
+                @change="change_status($event)"
+                class="custom-select col-8"
+                style="float: right;"
               >
-                {{ item.name }}</option
-              >
-            </select>
-            <h5 v-else class="text-danger" style="float: right;">{{ status || "Leer" }}</h5>
+                <option
+                  v-for="item in statuses"
+                  :key="item.status_id"
+                  :value="item.status_id"
+                  :selected="item.status_id == media.status"
+                >
+                  {{ item.name }}</option
+                >
+              </select>
+              <h5 v-else class="text-danger" style="float: right;">{{ status || "Leer" }}</h5>
+            </div>
           </div>
         </div>
+
         <div class="card-body">
           <h5 class="card-title">{{ media.name }}</h5>
           <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
@@ -85,12 +102,17 @@ export default {
       type: "",
       status: "",
       statuses: JSON,
+      types: JSON,
       edit_status: false,
+      edit_type: false,
     };
   },
   methods: {
     click_status: function() {
       this.edit_status = !this.edit_status;
+    },
+    click_type: function() {
+      this.edit_type = !this.edit_type;
     },
     change_status(event) {
       if (event.target.value != this.media.status) {
@@ -109,6 +131,23 @@ export default {
       }
       this.click_status();
     },
+    change_type(event) {
+      if (event.target.value != this.media.type) {
+        axios
+          .put("http://localhost:8181/api/media/update/type/" + this.media.media_id + "/" + event.target.value)
+          .then((response) => {
+            if (response.status == 200) {
+              this.update();
+            } else {
+              console.log(response);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      this.click_type();
+    },
     update: function() {
       axios
         .get("http://localhost:8181/api/media/" + this.id)
@@ -118,7 +157,7 @@ export default {
           this.type_id = this.media.type;
           this.status_id = this.media.status;
           axios
-            .get("http://localhost:8181/api/types/" + this.type_id)
+            .get("http://localhost:8181/api/type/" + this.type_id)
             .then((response) => {
               this.type = response.data.name;
             })
@@ -137,6 +176,14 @@ export default {
             .get("http://localhost:8181/api/status/")
             .then((response) => {
               this.statuses = response.data;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          axios
+            .get("http://localhost:8181/api/type/")
+            .then((response) => {
+              this.types = response.data;
             })
             .catch((error) => {
               console.log(error);
