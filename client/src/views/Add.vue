@@ -1,43 +1,28 @@
 <template>
   <div>
     <div class="row justify-content-center w-100 mt-3">
-      <router-link to="/list" tag="button" class="btn btn-primary" style="width: 100%; max-width: 600px;"
-        >Liste</router-link
-      >
-      <button to="/list" tag="button" @click="add()" class="btn btn-secondary" style="width: 100%; max-width: 600px;">
-        Speichern
-      </button>
+      <div class="btn-group-vertical mx-4" style="width: 100%; max-width: 600px;">
+        <router-link to="/list" tag="button" class="btn btn-primary">Liste</router-link>
+        <button tag="button" @click="addMedia()" class="btn btn-secondary">
+          Speichern
+        </button>
+      </div>
     </div>
     <div class="row justify-content-center w-100 mt-3">
-      <div class="card mb-3 mx-3" style="width: 600px;">
+      <div class="card mb-3 mx-4" style="width: 600px;">
         <div class="card-header" style="clear: both">
           <select class="custom-select col-4" v-model="input_type" style="float: left;">
-            <option v-for="item in types" :key="item.type_id" :value="item.type_id" :selected="item.type_id == 1">
-              {{ item.name }}</option
-            >
+            <option v-for="item in types" :key="item.type_id" :value="item.type_id" :selected="item.type_id == 1"> {{ item.name }}</option>
           </select>
           <div>
             <select class="custom-select col-4" v-model="input_status" style="float: right;">
-              <option
-                v-for="item in statuses"
-                :key="item.status_id"
-                :value="item.status_id"
-                :selected="item.status_id == 4"
-              >
-                {{ item.name }}</option
-              >
+              <option v-for="item in statuses" :key="item.status_id" :value="item.status_id" :selected="item.status_id == 4"> {{ item.name }}</option>
             </select>
           </div>
         </div>
         <div class="card-body">
           <div class="form-group">
-            <input
-              class="form-control form-control-lg"
-              type="text"
-              placeholder="Name"
-              id="inputLarge"
-              v-model="input_name"
-            />
+            <input class="form-control form-control-lg" type="text" placeholder="Name" id="inputLarge" v-model="input_name" />
           </div>
         </div>
         <svg
@@ -115,7 +100,7 @@ export default {
           console.log(error);
         });
     },
-    add: function() {
+    addMedia: function() {
       axios
         .post("http://localhost:8181/api/media/insert/", {
           name: this.input_name,
@@ -124,7 +109,7 @@ export default {
           status: this.input_status,
         })
         .then((response) => {
-          this.types = response.data;
+          this.$router.push({ path: "/list" });
         })
         .catch((error) => {
           console.log(error);

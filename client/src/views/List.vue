@@ -1,44 +1,46 @@
 <template>
-  <div class="row justify-content-center w-100">
-    <div class="col-8">
-      <div class="row justify-content-center w mt-3">
-        <div class="btn-group-vertical mx-4" style="width: 100%; max-width: 600px;">
-          <router-link to="/" tag="button" class="btn btn-primary">Home</router-link>
-          <router-link to="/add" tag="button" class="btn btn-secondary">Hinzufügen</router-link>
+  <div>
+    <div class="row justify-content-center w-100 mt-3">
+      <div class="btn-group-vertical mx-4" style="width: 100%; max-width: 600px;">
+        <router-link to="/" tag="button" class="btn btn-primary">Home</router-link>
+        <router-link to="/add" tag="button" class="btn btn-secondary">Hinzufügen</router-link>
+      </div>
+    </div>
+    <div class="row justify-content-center w-100 mt-3">
+      <div class="col-12">
+        <div class="row justify-content-center">
+          <select class="custom-select col-2 mx-2" v-model="filterType" style="min-width: 150px; max-width: 150px;">
+            <option v-for="item in types" :key="item" :value="item" :selected="item == null">{{ item }}</option>
+          </select>
+          <select class="custom-select col-2 mx-2" v-model="filterStatus" style="min-width: 150px; max-width: 150px;">
+            <option v-for="item in statuses" :key="item" :value="item" :selected="item == null">{{ item }}</option>
+          </select>
         </div>
+        <table class="table table-hover w-auto mx-auto">
+          <thead>
+            <th @click="sort('type')">Typ</th>
+            <th @click="sort('name')">Name</th>
+            <th @click="sort('year')">Jahr</th>
+            <th @click="sort('status')">Status</th>
+          </thead>
+          <tbody>
+            <tr v-for="item in sortedMedia" :key="item.media_id">
+              <td>
+                <router-link
+                  :to="{ name: 'Media', params: { id: item.media_id } }"
+                  tag="button"
+                  class="btn btn-outline-primary"
+                  :class="typeClass(item.type)"
+                  >{{ types[item.type] || "Leer" }}</router-link
+                >
+              </td>
+              <td class="align-middle">{{ item.name }}</td>
+              <td class="align-middle">{{ item.year }}</td>
+              <td class="align-middle">{{ statuses[item.status] }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="row justify-content-center mt-3">
-        <select class="custom-select col-2 mx-1" v-model="filterType" style="min-width: 150px; max-width: 150px;">
-          <option v-for="item in types" :key="item" :value="item" :selected="item == null">{{ item }}</option>
-        </select>
-        <select class="custom-select col-2 mx-1" v-model="filterStatus" style="min-width: 150px; max-width: 150px;">
-          <option v-for="item in statuses" :key="item" :value="item" :selected="item == null">{{ item }}</option>
-        </select>
-      </div>
-      <table class="table table-hover w-auto mx-auto">
-        <thead>
-          <th @click="sort('type')">Typ</th>
-          <th @click="sort('name')">Name</th>
-          <th @click="sort('year')">Jahr</th>
-          <th @click="sort('status')">Status</th>
-        </thead>
-        <tbody>
-          <tr v-for="item in sortedMedia" :key="item.media_id">
-            <td>
-              <router-link
-                :to="{ name: 'Media', params: { id: item.media_id } }"
-                tag="button"
-                class="btn btn-outline-primary"
-                :class="typeClass(item.type)"
-                >{{ types[item.type] || "Leer" }}</router-link
-              >
-            </td>
-            <td class="align-middle">{{ item.name }}</td>
-            <td class="align-middle">{{ item.year }}</td>
-            <td class="align-middle">{{ statuses[item.status] }}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </template>

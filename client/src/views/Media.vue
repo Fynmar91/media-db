@@ -1,42 +1,25 @@
 <template>
   <div>
     <div class="row justify-content-center w-100 mt-3">
-      <router-link to="/list" tag="button" class="btn btn-primary" style="width: 100%; max-width: 600px;"
-        >Liste</router-link
-      >
+      <div class="btn-group-vertical mx-4" style="width: 100%; max-width: 600px;">
+        <router-link to="/list" tag="button" class="btn btn-primary" style="width: 100%; max-width: 600px;">Liste</router-link>
+      </div>
     </div>
-    <div class="row justify-content-center w-100 mt-3">
-      <div class="card mb-3 mx-3" style="width: 600px;">
-        <div class="row mx-0" style="width: 600px;">
+    <div class="row justify-content-center w-100 my-3">
+      <div class="card mb-3 mx-4 h-100" style="width: 100%; max-width: 600px;">
+        <div class="row mx-0" style="width: 100%; max-width: 600px;">
           <div class="col-6 card-header" style="clear: both" @dblclick="click_type">
             <div>
               <select v-if="edit_type" @change="change_type($event)" class="custom-select col-8">
-                <option
-                  v-for="item in types"
-                  :key="item.type_id"
-                  :value="item.type_id"
-                  :selected="item.type_id == media.type"
-                >
-                  {{ item.name }}</option
-                >
+                <option v-for="item in types" :key="item.type_id" :value="item.type_id" :selected="item.type_id == media.type"> {{ item.name }}</option>
               </select>
               <h3 v-else style="float: left;">{{ type || "Leer" }}</h3>
             </div>
           </div>
           <div class="col-6 card-header" style="clear: both" @dblclick="click_status">
             <div>
-              <select
-                v-if="edit_status"
-                @change="change_status($event)"
-                class="custom-select col-8"
-                style="float: right;"
-              >
-                <option
-                  v-for="item in statuses"
-                  :key="item.status_id"
-                  :value="item.status_id"
-                  :selected="item.status_id == media.status"
-                >
+              <select v-if="edit_status" @change="change_status($event)" class="custom-select col-8" style="float: right;">
+                <option v-for="item in statuses" :key="item.status_id" :value="item.status_id" :selected="item.status_id == media.status">
                   {{ item.name }}</option
                 >
               </select>
@@ -44,8 +27,8 @@
             </div>
           </div>
         </div>
-
         <div class="card-body">
+          <button type="button" @click="deleteMedia()" class="btn btn-outline-danger" style="float: right;">🗑</button>
           <h5 class="card-title">{{ media.name }}</h5>
           <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
         </div>
@@ -71,16 +54,11 @@
           <a href="#" class="card-link">Eintrag</a>
         </div>
         <div class="card-footer text-muted">
-          {{ media.created }}
+          {{ date }}
         </div>
       </div>
-
-      <div class="card h-100" style="width: 600px;">
-        <div class="card-body">
-          <h4 class="card-title">Card title</h4>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <a href="#" class="card-link">Öffnen</a>
-        </div>
+      <div class="w-100">
+        <history @update="update" v-for="item in history" v-bind:history="item" v-bind:parent="this" :key="item.history_id"></history>
       </div>
     </div>
   </div>
@@ -88,8 +66,10 @@
 
 <script>
 import axios from "axios";
+import History from "../components/History.vue";
 
 export default {
+  components: { History },
   name: "Menu",
   props: {
     id: null,
@@ -97,12 +77,14 @@ export default {
   data() {
     return {
       media: JSON,
+      history: JSON,
+      date: "",
       type_id: null,
       status_id: null,
       type: "",
+      types: JSON,
       status: "",
       statuses: JSON,
-      types: JSON,
       edit_status: false,
       edit_type: false,
     };
@@ -156,6 +138,15 @@ export default {
           this.name = this.media.name;
           this.type_id = this.media.type;
           this.status_id = this.media.status;
+          this.date = this.media.created.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, "$3.$2.$1");
+          axios
+            .get("http://localhost:8181/api/media/history/" + this.media.media_id)
+            .then((response) => {
+              this.history = response.data;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
           axios
             .get("http://localhost:8181/api/type/" + this.type_id)
             .then((response) => {
@@ -188,6 +179,16 @@ export default {
             .catch((error) => {
               console.log(error);
             });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deleteMedia: function() {
+      axios
+        .delete("http://localhost:8181/api/media/delete/" + this.media.media_id)
+        .then((response) => {
+          this.$router.push({ path: "/list" });
         })
         .catch((error) => {
           console.log(error);

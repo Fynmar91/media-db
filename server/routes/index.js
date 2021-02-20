@@ -39,8 +39,12 @@ router.put("/media/update/:id", async (req, res) => {
 //delete
 router.delete("/media/delete/:id", async (req, res) => {
   try {
-    let results = await db.one(req.params.id);
-    res.json(results);
+    console.log("Delete:");
+    console.log(req.params.id);
+    console.log("");
+
+    await db.delete(req.params.id);
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -50,7 +54,10 @@ router.delete("/media/delete/:id", async (req, res) => {
 //insert
 router.post("/media/insert/", async (req, res) => {
   try {
+    console.log("Insert:");
     console.log(req.body);
+    console.log("");
+
     let media = [];
     media[0] = req.body.name;
     media[1] = req.body.year;
@@ -126,6 +133,33 @@ router.get("/status/:status", async (req, res) => {
   try {
     let results = await db.getStatus(req.params.status);
     res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+//History
+//select all
+router.get("/media/history/:id", async (req, res) => {
+  try {
+    let results = await db.getAllHist(req.params.id);
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+//delete one
+router.delete("/media/history/delete/:id", async (req, res) => {
+  try {
+    console.log("Delete History:");
+    console.log(req.params.id);
+    console.log("");
+
+    await db.deleteHist(req.params.id);
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

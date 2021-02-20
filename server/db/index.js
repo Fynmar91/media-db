@@ -36,6 +36,18 @@ mediadb.getOne = (id) => {
   });
 };
 
+//delete
+mediadb.delete = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`DELETE FROM media WHERE media_id = ?`, id, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
 //insert
 mediadb.insert = (media) => {
   return new Promise((resolve, reject) => {
@@ -118,6 +130,31 @@ mediadb.getStatus = (type) => {
         return reject(err);
       }
       return resolve(results[0]);
+    });
+  });
+};
+
+//History
+//get all histories for media
+mediadb.getAllHist = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`SELECT * FROM history WHERE media_id = ?`, id, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
+//delete history
+mediadb.deleteHist = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`DELETE FROM history WHERE history_id = ?`, id, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
     });
   });
 };
