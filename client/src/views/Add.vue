@@ -45,7 +45,7 @@
             <input type="text" v-model="input_year" class="form-control" placeholder="Jahr" id="inputDefault" />
           </div>
         </ul>
-        <datepicker v-model="picked" />
+        <datepicker v-model="picked" inputFormat="dd.MM.yyyy" />
       </div>
     </div>
   </div>
@@ -62,7 +62,6 @@ import axios from "axios";
 
 export default {
   name: "Add",
-  props: {},
   data() {
     return {
       input_name: null,

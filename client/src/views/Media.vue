@@ -51,14 +51,17 @@
           <li class="list-group-item">{{ media.year }}</li>
         </ul>
         <div class="card-body">
-          <a href="#" class="card-link">Eintrag</a>
+          <a href="#" @click="toggleHistAdd" class="card-link">Eintrag</a>
         </div>
         <div class="card-footer text-muted">
           {{ date }}
         </div>
       </div>
       <div class="w-100">
-        <history @update="update" v-for="item in history" v-bind:history="item" v-bind:parent="this" :key="item.history_id"></history>
+        <addHistory :key="id"> </addHistory>
+      </div>
+      <div class="w-100">
+        <history v-if="render_history" @update="update" v-for="item in history" v-bind:history="item" :key="id + '-' + item.history_id"></history>
       </div>
     </div>
   </div>
@@ -66,11 +69,30 @@
 
 <script>
 import axios from "axios";
-import History from "../components/History.vue";
+import AddHistory from "@/components/AddHistory.vue";
+import History from "@/components/History.vue";
+
+function initialState() {
+  return {
+    media: JSON,
+    history: JSON,
+    date: "",
+    type_id: null,
+    status_id: null,
+    type: "",
+    types: JSON,
+    status: "",
+    statuses: JSON,
+    edit_status: false,
+    edit_type: false,
+    add_history: false,
+    render_history: false,
+  };
+}
 
 export default {
-  components: { History },
-  name: "Menu",
+  components: { AddHistory, History },
+  name: "Media",
   props: {
     id: null,
   },
@@ -87,6 +109,8 @@ export default {
       statuses: JSON,
       edit_status: false,
       edit_type: false,
+      add_history: false,
+      render_history: false,
     };
   },
   methods: {
@@ -95,6 +119,9 @@ export default {
     },
     click_type: function() {
       this.edit_type = !this.edit_type;
+    },
+    toggleHistAdd: function() {
+      this.add_history = !this.add_history;
     },
     change_status(event) {
       if (event.target.value != this.media.status) {
@@ -143,6 +170,7 @@ export default {
             .get("http://localhost:8181/api/media/history/" + this.media.media_id)
             .then((response) => {
               this.history = response.data;
+              this.render_history = true;
             })
             .catch((error) => {
               console.log(error);
@@ -193,6 +221,9 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    resetWindow: function() {
+      Object.assign(this.$data, initialState());
     },
   },
   mounted() {

@@ -28,11 +28,13 @@
               <td>
                 <router-link
                   :to="{ name: 'Media', params: { id: item.media_id } }"
+                  :key="item.media_id"
                   tag="button"
                   class="btn btn-outline-primary"
                   :class="typeClass(item.type)"
-                  >{{ types[item.type] || "Leer" }}</router-link
                 >
+                  {{ types[item.type] || "Leer" }}
+                </router-link>
               </td>
               <td class="align-middle">{{ item.name }}</td>
               <td class="align-middle">{{ item.year }}</td>
@@ -49,7 +51,7 @@
 import axios from "axios";
 
 export default {
-  name: "Menu",
+  name: "List",
   data() {
     return {
       list: JSON,

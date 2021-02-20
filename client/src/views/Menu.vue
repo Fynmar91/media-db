@@ -18,10 +18,6 @@
 <script>
 export default {
   name: "Menu",
-  data() {
-    return {};
-  },
-  mounted() {},
 };
 </script>
 

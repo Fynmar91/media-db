@@ -4,7 +4,7 @@
       <div class="card-body">
         <button type="button" @click="deleteHistory()" class="btn btn-outline-danger" style="float: right;">🗑</button>
         <h4 class="card-title">{{ history.description }}</h4>
-        <h6 class="card-subtitle mb-2 text-muted">{{ history.date }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">{{ date }}</h6>
       </div>
     </div>
   </div>
@@ -14,10 +14,14 @@
 import axios from "axios";
 
 export default {
-  name: "Menu",
+  name: "History",
   props: {
     history: JSON,
-    parent: null,
+  },
+  data() {
+    return {
+      date: this.history.date.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, "$3.$2.$1"),
+    };
   },
   methods: {
     deleteHistory: function() {
@@ -29,10 +33,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-    mounted() {
-      console.log("Parent:");
-      console.log(parent);
     },
   },
 };
