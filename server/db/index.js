@@ -159,4 +159,16 @@ mediadb.deleteHist = (id) => {
   });
 };
 
+//insert history
+mediadb.insertHist = (history) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`INSERT INTO history (media_id, description, date) VALUES (?, ?, ?)`, history, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
 module.exports = mediadb;

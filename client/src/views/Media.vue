@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="w-100">
-        <addHistory :key="id"> </addHistory>
+        <addHistory v-if="add_history" @update="update" v-bind:id="id" :key="id"> </addHistory>
       </div>
       <div class="w-100">
         <history v-if="render_history" @update="update" v-for="item in history" v-bind:history="item" :key="id + '-' + item.history_id"></history>
@@ -71,24 +71,6 @@
 import axios from "axios";
 import AddHistory from "@/components/AddHistory.vue";
 import History from "@/components/History.vue";
-
-function initialState() {
-  return {
-    media: JSON,
-    history: JSON,
-    date: "",
-    type_id: null,
-    status_id: null,
-    type: "",
-    types: JSON,
-    status: "",
-    statuses: JSON,
-    edit_status: false,
-    edit_type: false,
-    add_history: false,
-    render_history: false,
-  };
-}
 
 export default {
   components: { AddHistory, History },
@@ -158,6 +140,7 @@ export default {
       this.click_type();
     },
     update: function() {
+      this.add_history = false;
       axios
         .get("http://localhost:8181/api/media/" + this.id)
         .then((response) => {
@@ -167,7 +150,7 @@ export default {
           this.status_id = this.media.status;
           this.date = this.media.created.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, "$3.$2.$1");
           axios
-            .get("http://localhost:8181/api/media/history/" + this.media.media_id)
+            .get("http://localhost:8181/api/history/" + this.media.media_id)
             .then((response) => {
               this.history = response.data;
               this.render_history = true;

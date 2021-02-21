@@ -26,7 +26,7 @@ export default {
   methods: {
     deleteHistory: function() {
       axios
-        .delete("http://localhost:8181/api/media/history/delete/" + this.history.history_id)
+        .delete("http://localhost:8181/api/history/delete/" + this.history.history_id)
         .then((response) => {
           this.$emit("update");
         })
