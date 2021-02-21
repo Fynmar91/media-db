@@ -60,9 +60,12 @@ router.post("/media/insert/", async (req, res) => {
 
     let media = [];
     media[0] = req.body.name;
-    media[1] = req.body.year;
-    media[2] = req.body.type;
-    media[3] = req.body.status;
+    media[1] = req.body.altname;
+    media[2] = req.body.addition;
+    media[3] = req.body.year;
+    media[4] = req.body.type;
+    media[5] = req.body.status;
+    media[6] = req.body.image;
     await db.insert(media);
     res.sendStatus(200);
   } catch (error) {

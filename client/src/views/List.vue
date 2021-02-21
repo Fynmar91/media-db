@@ -20,6 +20,7 @@
           <thead>
             <th @click="sort('type')">Typ</th>
             <th @click="sort('name')">Name</th>
+            <th @click="sort('addition')">Staffel</th>
             <th @click="sort('year')">Jahr</th>
             <th @click="sort('status')">Status</th>
           </thead>
@@ -37,6 +38,7 @@
                 </router-link>
               </td>
               <td class="align-middle">{{ item.name }}</td>
+              <td class="align-middle">{{ item.addition }}</td>
               <td class="align-middle">{{ item.year }}</td>
               <td class="align-middle">{{ statuses[item.status] }}</td>
             </tr>

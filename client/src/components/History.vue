@@ -25,14 +25,17 @@ export default {
   },
   methods: {
     deleteHistory: function() {
-      axios
-        .delete("http://localhost:8181/api/history/delete/" + this.history.history_id)
-        .then((response) => {
-          this.$emit("update");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      var result = confirm("Wirklich löschen?");
+      if (result) {
+        axios
+          .delete("http://localhost:8181/api/history/delete/" + this.history.history_id)
+          .then((response) => {
+            this.$emit("update");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };

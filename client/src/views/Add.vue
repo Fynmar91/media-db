@@ -22,30 +22,20 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <input class="form-control form-control-lg" type="text" placeholder="Name" id="inputLarge" v-model="input_name" />
+            <input class="form-control form-control-lg w-25" type="text" placeholder="Staffel" id="inputLarge" style="float: right;" v-model="input_addition" />
+            <input class="form-control form-control-lg w-75" type="text" placeholder="Name" id="inputLarge" v-model="input_name" />
+            <input type="text" class="form-control" placeholder="Alternativer Name" id="inputDefault" v-model="input_altname" />
           </div>
         </div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="d-block user-select-none"
-          width="100%"
-          height="200"
-          aria-label="Placeholder: Image cap"
-          focusable="false"
-          role="img"
-          preserveAspectRatio="xMidYMid slice"
-          viewBox="0 0 318 180"
-          style="font-size:1.125rem;text-anchor:middle"
-        >
-          <rect width="100%" height="100%" fill="#868e96"></rect>
-          <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-        </svg>
+        <div class="form-group">
+          <input class="form-control form-control-lg" type="text" placeholder="Bild URL" id="inputLarge" v-model="input_image" />
+        </div>
         <ul class="list-group list-group-flush">
           <div class="form-group">
-            <input type="text" v-model="input_year" class="form-control" placeholder="Jahr" id="inputDefault" />
+            <input type="text" class="form-control" placeholder="Jahr" id="inputDefault" v-model="input_year" />
           </div>
         </ul>
-        <datepicker v-model="picked" inputFormat="dd.MM.yyyy" />
+        <datepicker inputFormat="dd.MM.yyyy" v-model="picked" />
       </div>
     </div>
   </div>
@@ -65,9 +55,12 @@ export default {
   data() {
     return {
       input_name: null,
+      input_altname: null,
+      input_addition: null,
       input_type: null,
       input_year: null,
       input_status: null,
+      input_image: null,
       statuses: JSON,
       types: JSON,
     };
@@ -103,9 +96,12 @@ export default {
       axios
         .post("http://localhost:8181/api/media/insert/", {
           name: this.input_name,
+          altname: this.input_altname,
+          addition: this.input_addition,
           year: this.input_year,
           type: this.input_type,
           status: this.input_status,
+          image: this.input_image,
         })
         .then((response) => {
           this.$router.push({ path: "/list" });
