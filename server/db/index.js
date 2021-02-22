@@ -43,6 +43,10 @@ mediadb.delete = (id) => {
       if (err) {
         return reject(err);
       }
+      console.log("Delete Media:");
+      console.log(id);
+      console.log("");
+
       return resolve(results);
     });
   });
@@ -55,6 +59,10 @@ mediadb.insert = (media) => {
       if (err) {
         return reject(err);
       }
+      console.log("Insert Media:");
+      console.log(media);
+      console.log("");
+
       return resolve(results);
     });
   });
@@ -154,6 +162,10 @@ mediadb.deleteHist = (id) => {
       if (err) {
         return reject(err);
       }
+      console.log("Delete History:");
+      console.log(id);
+      console.log("");
+
       return resolve(results);
     });
   });
@@ -166,6 +178,11 @@ mediadb.insertHist = (history) => {
       if (err) {
         return reject(err);
       }
+
+      console.log("Insert History:");
+      console.log(history);
+      console.log("");
+
       return resolve(results);
     });
   });

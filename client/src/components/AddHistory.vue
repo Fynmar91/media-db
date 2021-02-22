@@ -4,7 +4,7 @@
       <div class="card-body w-100">
         <button type="button" @click="addHistory()" class="btn btn-outline-success" style="float: right;">Speichern</button>
         <input class="form-control form-control-lg w-50" type="text" placeholder="Description" id="inputLarge" v-model="input_description" />
-        <datepicker v-model="picked" class="w-50" inputFormat="dd.MM.yyyy" />
+        <datepicker v-model="input_date" class="w-50" inputFormat="dd.MM.yyyy" />
       </div>
     </div>
   </div>
@@ -13,7 +13,7 @@
 <script setup>
 import datepicker from "vue3-datepicker";
 import { ref } from "vue";
-const picked = ref(new Date());
+const input_date = ref(new Date());
 </script>
 
 <script>
@@ -34,7 +34,10 @@ export default {
         .post("http://localhost:8181/api/history/insert/", {
           media_id: this.id,
           description: this.input_description,
-          date: this.input_date,
+          date: this.input_date
+            .toISOString()
+            .slice(0, 19)
+            .replace("T", " "),
         })
         .then((response) => {
           this.$emit("update");

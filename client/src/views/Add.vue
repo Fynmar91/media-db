@@ -35,17 +35,10 @@
             <input type="text" class="form-control" placeholder="Jahr" id="inputDefault" v-model="input_year" />
           </div>
         </ul>
-        <datepicker inputFormat="dd.MM.yyyy" v-model="picked" />
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-import datepicker from "vue3-datepicker";
-import { ref } from "vue";
-const picked = ref(new Date());
-</script>
 
 <script>
 import axios from "axios";

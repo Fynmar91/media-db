@@ -29,7 +29,7 @@
         </div>
         <div class="card-body">
           <button type="button" @click="deleteMedia()" class="btn btn-outline-danger" style="float: right;">🗑</button>
-          <h5 class="card-title">{{ media.name }}</h5>
+          <h5 class="card-title">{{ media.name }} S{{ media.addition }}</h5>
           <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
         </div>
         <img :src="media.image" />
