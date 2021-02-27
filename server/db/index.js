@@ -67,7 +67,7 @@ mediadb.delete = (id) => {
 //insert
 mediadb.insert = (media) => {
   return new Promise((resolve, reject) => {
-    pool.query(`INSERT INTO media (name, altname, addition, year, type, status, image) VALUES (?, ?, ?, ?, ?, ?, ?)`, media, (err, results) => {
+    pool.query(`INSERT INTO media (name, altname, addition, year, type, status) VALUES (?, ?, ?, ?, ?, ?)`, media, (err, results) => {
       if (err) {
         return reject(err);
       }

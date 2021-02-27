@@ -72,7 +72,6 @@ router.post("/media/insert/", async (req, res) => {
     media[3] = req.body.year;
     media[4] = req.body.type;
     media[5] = req.body.status;
-    media[6] = req.body.image;
     await db.insert(media);
     res.sendStatus(200);
   } catch (error) {

@@ -27,9 +27,6 @@
             <input type="text" class="form-control" placeholder="Alternativer Name" id="inputDefault" v-model="input_altname" />
           </div>
         </div>
-        <div class="form-group">
-          <input class="form-control form-control-lg" type="text" placeholder="Bild URL" id="inputLarge" v-model="input_image" />
-        </div>
         <ul class="list-group list-group-flush">
           <div class="form-group">
             <input type="text" class="form-control" placeholder="Jahr" id="inputDefault" v-model="input_year" />
@@ -58,7 +55,6 @@ export default {
       input_type: this.type,
       input_year: null,
       input_status: null,
-      input_image: null,
       statuses: JSON,
       types: JSON,
     };
@@ -99,7 +95,6 @@ export default {
           year: this.input_year,
           type: this.input_type,
           status: this.input_status,
-          image: this.input_image,
         })
         .then((response) => {
           this.$router.push({ path: "/list" });
