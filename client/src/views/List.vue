@@ -89,11 +89,11 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:8181/api/media/type/" + this.type)
+      .get("http://" + process.env.VUE_APP_APIURL + "/api/media/type/" + this.type)
       .then((response) => {
         this.list = response.data;
         axios
-          .get("http://localhost:8181/api/type/")
+          .get("http://" + process.env.VUE_APP_APIURL + "/api/type/")
           .then((response) => {
             response.data.forEach((element) => {
               this.types[element.type_id] = element.name;
@@ -103,7 +103,7 @@ export default {
             console.log(error);
           });
         axios
-          .get("http://localhost:8181/api/status/")
+          .get("http://" + process.env.VUE_APP_APIURL + "/api/status/")
           .then((response) => {
             response.data.forEach((element) => {
               this.statuses[element.status_id] = element.name;

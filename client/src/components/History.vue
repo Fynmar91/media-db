@@ -28,7 +28,7 @@ export default {
       var result = confirm("Wirklich löschen?");
       if (result) {
         axios
-          .delete("http://localhost:8181/api/history/delete/" + this.history.history_id)
+          .delete("http://" + process.env.VUE_APP_APIURL + "/api/history/delete/" + this.history.history_id)
           .then((response) => {
             this.$emit("update");
           })

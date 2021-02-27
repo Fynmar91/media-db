@@ -31,7 +31,7 @@ export default {
   methods: {
     addHistory: function() {
       axios
-        .post("http://localhost:8181/api/history/insert/", {
+        .post("http://" + process.env.VUE_APP_APIURL + "/api/history/insert/", {
           media_id: this.id,
           description: this.input_description,
           date: this.input_date

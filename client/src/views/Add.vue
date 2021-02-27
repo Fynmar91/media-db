@@ -66,7 +66,7 @@ export default {
   methods: {
     update: function() {
       axios
-        .get("http://localhost:8181/api/status/")
+        .get("http://" + process.env.VUE_APP_APIURL + "/api/status/")
         .then((response) => {
           this.statuses = response.data;
         })
@@ -74,7 +74,7 @@ export default {
           console.log(error);
         });
       axios
-        .get("http://localhost:8181/api/type/")
+        .get("http://" + process.env.VUE_APP_APIURL + "/api/type/")
         .then((response) => {
           this.types = response.data;
         })
@@ -82,7 +82,7 @@ export default {
           console.log(error);
         });
       axios
-        .get("http://localhost:8181/api/media/" + this.id)
+        .get("http://" + process.env.VUE_APP_APIURL + "/api/media/" + this.id)
         .then((response) => {
           this.media = response.data;
         })
@@ -92,7 +92,7 @@ export default {
     },
     addMedia: function() {
       axios
-        .post("http://localhost:8181/api/media/insert/", {
+        .post("http://" + process.env.VUE_APP_APIURL + "/api/media/insert/", {
           name: this.input_name,
           altname: this.input_altname,
           addition: this.input_addition,

@@ -112,7 +112,7 @@ export default {
     change_status(event) {
       if (event.target.value != this.media.status) {
         axios
-          .put("http://localhost:8181/api/media/update/status/" + this.media.media_id + "/" + event.target.value)
+          .put("http://" + process.env.VUE_APP_APIURL + "/api/media/update/status/" + this.media.media_id + "/" + event.target.value)
           .then((response) => {
             if (response.status == 200) {
               this.update();
@@ -129,7 +129,7 @@ export default {
     change_type(event) {
       if (event.target.value != this.media.type) {
         axios
-          .put("http://localhost:8181/api/media/update/type/" + this.media.media_id + "/" + event.target.value)
+          .put("http://" + process.env.VUE_APP_APIURL + "/api/media/update/type/" + this.media.media_id + "/" + event.target.value)
           .then((response) => {
             if (response.status == 200) {
               this.update();
@@ -146,7 +146,7 @@ export default {
     update: function() {
       this.add_history = false;
       axios
-        .get("http://localhost:8181/api/media/" + this.id)
+        .get("http://" + process.env.VUE_APP_APIURL + "/api/media/" + this.id)
         .then((response) => {
           this.media = response.data;
           this.name = this.media.name;
@@ -154,7 +154,7 @@ export default {
           this.status_id = this.media.status;
           this.date = this.media.created.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, "$3.$2.$1");
           axios
-            .get("http://localhost:8181/api/history/" + this.media.media_id)
+            .get("http://" + process.env.VUE_APP_APIURL + "/api/history/" + this.media.media_id)
             .then((response) => {
               this.history = response.data;
               this.render_history = true;
@@ -163,7 +163,7 @@ export default {
               console.log(error);
             });
           axios
-            .get("http://localhost:8181/api/type/" + this.type_id)
+            .get("http://" + process.env.VUE_APP_APIURL + "/api/type/" + this.type_id)
             .then((response) => {
               this.type = response.data.name;
             })
@@ -171,7 +171,7 @@ export default {
               console.log(error);
             });
           axios
-            .get("http://localhost:8181/api/status/" + this.status_id)
+            .get("http://" + process.env.VUE_APP_APIURL + "/api/status/" + this.status_id)
             .then((response) => {
               this.status = response.data.name;
             })
@@ -179,7 +179,7 @@ export default {
               console.log(error);
             });
           axios
-            .get("http://localhost:8181/api/type/")
+            .get("http://" + process.env.VUE_APP_APIURL + "/api/type/")
             .then((response) => {
               this.types = response.data;
             })
@@ -187,7 +187,7 @@ export default {
               console.log(error);
             });
           axios
-            .get("http://localhost:8181/api/status/")
+            .get("http://" + process.env.VUE_APP_APIURL + "/api/status/")
             .then((response) => {
               this.statuses = response.data;
             })
@@ -195,7 +195,7 @@ export default {
               console.log(error);
             });
           axios
-            .get("http://localhost:8181/api/prop/" + this.id)
+            .get("http://" + process.env.VUE_APP_APIURL + "/api/prop/" + this.id)
             .then((response) => {
               this.props = response.data;
             })
@@ -211,7 +211,7 @@ export default {
       var result = confirm("Wirklich löschen?");
       if (result) {
         axios
-          .delete("http://localhost:8181/api/media/delete/" + this.media.media_id)
+          .delete("http://" + process.env.VUE_APP_APIURL + "/api/media/delete/" + this.media.media_id)
           .then((response) => {
             this.$router.push({ path: "/list" });
           })
