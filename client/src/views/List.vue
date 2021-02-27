@@ -3,15 +3,12 @@
     <div class="row justify-content-center w-100 mt-3">
       <div class="btn-group-vertical mx-4" style="width: 100%; max-width: 600px;">
         <router-link to="/" tag="button" class="btn btn-primary">Home</router-link>
-        <router-link to="/add" tag="button" class="btn btn-secondary">Hinzufügen</router-link>
+        <router-link :to="{ name: 'Add', params: { type: type } }" tag="button" class="btn btn-secondary">Hinzufügen</router-link>
       </div>
     </div>
     <div class="row justify-content-center w-100 mt-3">
       <div class="col-12">
         <div class="row justify-content-center">
-          <select class="custom-select col-2 mx-2" v-model="filterType" style="min-width: 150px; max-width: 150px;">
-            <option v-for="item in types" :key="item" :value="item" :selected="item == null">{{ item }}</option>
-          </select>
           <select class="custom-select col-2 mx-2" v-model="filterStatus" style="min-width: 150px; max-width: 150px;">
             <option v-for="item in statuses" :key="item" :value="item" :selected="item == null">{{ item }}</option>
           </select>
@@ -27,14 +24,8 @@
           <tbody>
             <tr v-for="item in sortedMedia" :key="item.media_id">
               <td>
-                <router-link
-                  :to="{ name: 'Media', params: { id: item.media_id } }"
-                  :key="item.media_id"
-                  tag="button"
-                  class="btn btn-outline-primary"
-                  :class="typeClass(item.type)"
-                >
-                  {{ types[item.type] || "Leer" }}
+                <router-link :to="{ name: 'Media', params: { id: item.media_id } }" :key="item.media_id" tag="button" class="btn btn-outline-primary">
+                  {{ this.types[type] }}
                 </router-link>
               </td>
               <td class="align-middle">{{ item.name }}</td>
@@ -54,6 +45,9 @@ import axios from "axios";
 
 export default {
   name: "List",
+  props: {
+    type: null,
+  },
   data() {
     return {
       list: JSON,
@@ -62,13 +56,12 @@ export default {
       types: [],
       statuses: [],
       loaded: false,
-      filterType: "",
       filterStatus: "",
     };
   },
   computed: {
     sortedMedia: function() {
-      if (this.loaded && this.types.length != 0 && this.statuses.length != 0) {
+      if (this.loaded && this.statuses.length != 0) {
         return this.list
           .sort((a, b) => {
             let modifier = 1;
@@ -76,12 +69,6 @@ export default {
             if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
             if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
             return 0;
-          })
-          .filter((row) => {
-            const media = row.type ? this.types[row.type].toString().toLowerCase() : "";
-            const searchTerm = this.filterType ? this.filterType.toLowerCase() : "";
-            if (searchTerm == "") return 1;
-            return media.includes(searchTerm);
           })
           .filter((row) => {
             const media = row.status ? this.statuses[row.status].toString().toLowerCase() : "";
@@ -99,20 +86,10 @@ export default {
       }
       this.currentSort = s;
     },
-    typeClass: function(type) {
-      switch (type) {
-        case 1:
-          return "btn-outline-primary";
-        case 2:
-          return "btn-outline-success";
-        default:
-          return "btn-outline-secondary";
-      }
-    },
   },
   mounted() {
     axios
-      .get("http://localhost:8181/api/media/")
+      .get("http://localhost:8181/api/media/type/" + this.type)
       .then((response) => {
         this.list = response.data;
         axios

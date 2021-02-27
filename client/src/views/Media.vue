@@ -2,7 +2,9 @@
   <div>
     <div class="row justify-content-center w-100 mt-3">
       <div class="btn-group-vertical mx-4" style="width: 100%; max-width: 600px;">
-        <router-link to="/list" tag="button" class="btn btn-primary" style="width: 100%; max-width: 600px;">Liste</router-link>
+        <router-link :to="{ name: 'List', params: { type: type_id } }" tag="button" class="btn btn-primary" style="width: 100%; max-width: 600px;"
+          >Liste</router-link
+        >
       </div>
     </div>
     <div class="row justify-content-center w-100 my-3">
@@ -23,7 +25,7 @@
                   {{ item.name }}</option
                 >
               </select>
-              <h5 v-else class="text-danger" style="float: right;">{{ status || "Leer" }}</h5>
+              <h5 v-else :class="statusClass(status_id)" style="float: right;">{{ status || "Leer" }}</h5>
             </div>
           </div>
         </div>
@@ -90,6 +92,20 @@ export default {
     },
     toggleHistAdd: function() {
       this.add_history = !this.add_history;
+    },
+    statusClass: function(status) {
+      switch (status) {
+        case 1:
+          return "text-success";
+        case 2:
+          return "text-info";
+        case 3:
+          return "text-danger";
+        case 4:
+          return "text-muted";
+        default:
+          return "text";
+      }
     },
     change_status(event) {
       if (event.target.value != this.media.status) {

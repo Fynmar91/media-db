@@ -14,7 +14,18 @@ router.get("/media/", async (req, res) => {
   }
 });
 
-//select
+//select by type
+router.get("/media/type/:type", async (req, res) => {
+  try {
+    let results = await db.getAllByType(req.params.type);
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+//select one
 router.get("/media/:id", async (req, res) => {
   try {
     let results = await db.getOne(req.params.id);

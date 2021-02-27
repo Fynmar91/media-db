@@ -12,8 +12,9 @@ const routes = [
   },
   {
     name: "List",
-    path: "/list",
+    path: "/list/:type",
     component: List,
+    props: true,
   },
   {
     name: "Media",
@@ -23,7 +24,7 @@ const routes = [
   },
   {
     name: "Add",
-    path: "/add",
+    path: "/add/:type",
     component: Add,
     props: true,
   },

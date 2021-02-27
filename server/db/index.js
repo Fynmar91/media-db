@@ -24,6 +24,18 @@ mediadb.getAll = () => {
   });
 };
 
+//get by type
+mediadb.getAllByType = (type) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`SELECT * FROM media WHERE type = ?`, type, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
 //get one
 mediadb.getOne = (id) => {
   return new Promise((resolve, reject) => {
