@@ -4,10 +4,10 @@ const cors = require("cors");
 const bp = require("body-parser");
 
 const app = express();
-cors({ credentials: true, origin: true });
+app.use(cors());
+app.options("*", cors());
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
-app.use(cors());
 app.use("/api", apiRouter);
 
 app.listen(process.env.PORT || 8181, () => {
