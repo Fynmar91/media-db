@@ -15,19 +15,13 @@
         </div>
         <table class="table table-hover w-auto mx-auto">
           <thead>
-            <th @click="sort('type')">Typ</th>
             <th @click="sort('name')">Name</th>
             <th @click="sort('addition')">Staffel</th>
             <th @click="sort('year')">Jahr</th>
             <th @click="sort('status')">Status</th>
           </thead>
           <tbody>
-            <tr v-for="item in sortedMedia" :key="item.media_id">
-              <td>
-                <router-link :to="{ name: 'Media', params: { id: item.media_id } }" :key="item.media_id" tag="button" class="btn btn-outline-primary">
-                  {{ this.types[type] }}
-                </router-link>
-              </td>
+            <tr v-for="item in sortedMedia" @click="onRowClick(item.media_id)" :key="item.media_id">
               <td class="align-middle">{{ item.name }}</td>
               <td class="align-middle">{{ item.addition }}</td>
               <td class="align-middle">{{ item.year }}</td>
@@ -80,6 +74,9 @@ export default {
     },
   },
   methods: {
+    onRowClick(id) {
+      this.$router.push({ path: "/media/" + id });
+    },
     sort: function(s) {
       if (s === this.currentSort) {
         this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
