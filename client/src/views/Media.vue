@@ -2,7 +2,8 @@
   <div>
     <div class="row justify-content-center w-100 mt-3">
       <div class="btn-group-vertical mx-4" style="width: 100%; max-width: 600px;">
-        <router-link :to="{ name: 'List', params: { type: type_id } }" tag="button" class="btn btn-primary" style="width: 100%; max-width: 600px;"
+        <router-link to="/" tag="button" class="btn btn-primary">Home</router-link>
+        <router-link :to="{ name: 'List', params: { type: type_id } }" tag="button" class="btn btn-secondary" style="width: 100%; max-width: 600px;"
           >Liste</router-link
         >
       </div>
@@ -34,13 +35,13 @@
           <h5 class="card-title">{{ media.name }} S{{ media.addition }}</h5>
           <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
         </div>
-        <img :src="media.image" />
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Erscheinungsjahr:&emsp;{{ media.year }}</li>
           <li v-for="prop in props" :key="prop.prop_id" class="list-group-item">{{ prop.name }}:&emsp; {{ prop.value }}</li>
         </ul>
         <div class="card-body">
           <a href="#" @click="toggleHistAdd" class="card-link">Eintrag</a>
+          <a :href="infoLink(type_id)" target="_blank" class="card-link">Info</a>
         </div>
         <div class="card-footer text-muted">
           {{ date }}
@@ -86,6 +87,17 @@ export default {
     };
   },
   methods: {
+    infoLink: function(type) {
+      switch (type) {
+        case 1:
+        case 2:
+          return "https://www.themoviedb.org/search?query=" + this.media.name;
+        case 3:
+          return "https://openlibrary.org/search?q=title%3A+%22" + this.media.name + "%22&mode=everything";
+        default:
+          return "text";
+      }
+    },
     click_status: function() {
       this.edit_status = !this.edit_status;
     },

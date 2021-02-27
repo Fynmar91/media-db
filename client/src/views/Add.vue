@@ -2,7 +2,8 @@
   <div>
     <div class="row justify-content-center w-100 mt-3">
       <div class="btn-group-vertical mx-4" style="width: 100%; max-width: 600px;">
-        <router-link :to="{ name: 'List', params: { type: type } }" tag="button" class="btn btn-primary">Liste</router-link>
+        <router-link to="/" tag="button" class="btn btn-primary">Home</router-link>
+        <router-link :to="{ name: 'List', params: { type: type } }" tag="button" class="btn btn-secondary">Liste</router-link>
         <button tag="button" @click="addMedia()" class="btn btn-secondary">
           Speichern
         </button>
@@ -31,8 +32,6 @@
           <div class="form-group">
             <input type="text" class="form-control" placeholder="Jahr" id="inputDefault" v-model="input_year" />
           </div>
-          <a href="www.openlibrary.org">www.openlibrary.org</a>
-          <a href="https://www.themoviedb.org/">https://www.themoviedb.org/</a>
         </ul>
       </div>
     </div>
