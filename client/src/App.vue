@@ -21,4 +21,8 @@ body {
 .list-group-item {
   background-color: #393939;
 }
+.row {
+  margin-right: auto;
+  margin-left: auto;
+}
 </style>
