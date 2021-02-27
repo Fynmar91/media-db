@@ -187,4 +187,57 @@ router.post("/history/insert/", async (req, res) => {
   }
 });
 
+//Property Type
+//select all propTypes
+router.get("/proptype/", async (req, res) => {
+  try {
+    let results = await db.getAllPropTypes();
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+//insert propType
+router.post("/proptype/insert/", async (req, res) => {
+  try {
+    let proptype = [];
+    proptype[0] = req.body.name;
+    proptype[1] = req.body.rank;
+    await db.insertPropType(proptype);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+//Property
+//select all props for media
+router.get("/prop/:id", async (req, res) => {
+  try {
+    let results = await db.getAllProps(req.params.id);
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+//insert prop
+router.post("/prop/insert/", async (req, res) => {
+  try {
+    let prop = [];
+    prop[0] = req.body.media_id;
+    prop[1] = req.body.proptype_id;
+    prop[2] = req.body.value;
+    await db.insertProp(prop);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;

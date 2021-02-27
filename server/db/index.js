@@ -200,4 +200,79 @@ mediadb.insertHist = (history) => {
   });
 };
 
+//Property Type
+//get all properties for media
+mediadb.getAllPropTypes = () => {
+  return new Promise((resolve, reject) => {
+    pool.query(`SELECT * FROM proptype`, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
+mediadb.getPropType = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`SELECT * FROM proptype WHERE proptype_id = ?`, id, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
+//insert property
+mediadb.insertPropType = (proptype) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`INSERT INTO proptype (name, rank) VALUES (?, ?)`, proptype, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+
+      console.log("Insert PropType:");
+      console.log(proptype);
+      console.log("");
+
+      return resolve(results);
+    });
+  });
+};
+
+//Property
+//get all properties for media
+mediadb.getAllProps = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT proptype.name, prop.value FROM prop INNER JOIN proptype ON prop.proptype_id = proptype.proptype_id WHERE media_id = ?`,
+      id,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+//insert property
+mediadb.insertProp = (prop) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`INSERT INTO prop (media_id, proptype_id, value) VALUES (?, ?, ?)`, prop, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+
+      console.log("Insert Prop:");
+      console.log(prop);
+      console.log("");
+
+      return resolve(results);
+    });
+  });
+};
+
 module.exports = mediadb;

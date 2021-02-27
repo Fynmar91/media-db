@@ -36,7 +36,8 @@
         </div>
         <img :src="media.image" />
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">{{ media.year }}</li>
+          <li class="list-group-item">Erscheinungsjahr:&emsp;{{ media.year }}</li>
+          <li v-for="prop in props" :key="prop.prop_id" class="list-group-item">{{ prop.name }}:&emsp; {{ prop.value }}</li>
         </ul>
         <div class="card-body">
           <a href="#" @click="toggleHistAdd" class="card-link">Eintrag</a>
@@ -77,6 +78,7 @@ export default {
       types: JSON,
       status: "",
       statuses: JSON,
+      props: JSON,
       edit_status: false,
       edit_type: false,
       add_history: false,
@@ -177,6 +179,14 @@ export default {
               console.log(error);
             });
           axios
+            .get("http://localhost:8181/api/type/")
+            .then((response) => {
+              this.types = response.data;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          axios
             .get("http://localhost:8181/api/status/")
             .then((response) => {
               this.statuses = response.data;
@@ -185,9 +195,9 @@ export default {
               console.log(error);
             });
           axios
-            .get("http://localhost:8181/api/type/")
+            .get("http://localhost:8181/api/prop/" + this.id)
             .then((response) => {
-              this.types = response.data;
+              this.props = response.data;
             })
             .catch((error) => {
               console.log(error);
