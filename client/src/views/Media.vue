@@ -171,6 +171,7 @@ export default {
     },
     update: function() {
       this.add_history = false;
+      this.add_prop = false;
       axios
         .get("http://" + process.env.VUE_APP_APIURL + "/api/media/" + this.id)
         .then((response) => {
