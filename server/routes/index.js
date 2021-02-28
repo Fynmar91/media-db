@@ -57,7 +57,7 @@ router.delete("/media/delete/:id", async (req, res) => {
     }
     let prop = await db.getAllProps(req.params.id);
     for (const iterator of prop) {
-      await db.deleteProp(iterator.history_id);
+      await db.deleteProp(iterator.prop_id);
     }
     res.sendStatus(200);
   } catch (error) {

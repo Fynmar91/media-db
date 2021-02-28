@@ -96,7 +96,7 @@ export default {
           status: this.input_status,
         })
         .then((response) => {
-          this.$router.push({ path: "/list" });
+          this.$router.push({ path: "/list/" + this.type });
         })
         .catch((error) => {
           console.log(error);

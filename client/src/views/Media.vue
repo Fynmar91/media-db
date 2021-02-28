@@ -239,7 +239,7 @@ export default {
         axios
           .delete("http://" + process.env.VUE_APP_APIURL + "/api/media/delete/" + this.media.media_id)
           .then((response) => {
-            this.$router.push({ path: "/list" });
+            this.$router.push({ path: "/list/" + type_id });
           })
           .catch((error) => {
             console.log(error);
