@@ -1,10 +1,14 @@
 <template>
   <div class="row justify-content-center mb-3 mx-4">
     <div class="card h-100" style="width: 600px;">
-      <div class="card-body">
-        <button type="button" @click="deleteHistory()" class="btn btn-outline-danger" style="float: right;">🗑</button>
-        <h4 class="card-title">{{ history.description }}</h4>
-        <h6 class="card-subtitle mb-2 text-muted">{{ date }}</h6>
+      <div class="card-body pr-0">
+        <div class="btn-group" style="width: 100%; max-width: 600px;">
+          <div class="card-body p-0 col-11">
+            <h4 class="card-title">{{ history.description }}</h4>
+            <h6 class="card-subtitle text-muted">{{ date }}</h6>
+          </div>
+          <button type="button" @click="deleteHistory()" class="btn btn-outline-primary">🗑</button>
+        </div>
       </div>
     </div>
   </div>

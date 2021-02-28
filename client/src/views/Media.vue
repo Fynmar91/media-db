@@ -36,14 +36,14 @@
               <h5 class="card-title">{{ media.name }}&emsp;{{ media.addition ? "S" + media.addition : "" }}</h5>
               <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
             </div>
-            <button type="button" @click="deleteMedia()" class="btn btn-outline-danger">🗑</button>
+            <button type="button" @click="deleteMedia()" class="btn btn-outline-primary">🗑</button>
           </div>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Erscheinungsjahr:&emsp;{{ media.year }}</li>
           <div class="btn-group" v-for="prop in props" :key="prop.prop_id" style="width: 100%; max-width: 600px;">
             <li class="list-group-item col-11">{{ prop.name }}:&emsp; {{ prop.value }}</li>
-            <button type="button" @click="deleteProp(prop.prop_id)" class="btn btn-outline-danger">🗑</button>
+            <button type="button" @click="deleteProp(prop.prop_id)" class="btn btn-outline-primary">🗑</button>
           </div>
         </ul>
         <div class="card-body">
