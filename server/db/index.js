@@ -11,6 +11,35 @@ const pool = mysql.createPool({
 
 let mediadb = {};
 
+//Log
+//get all logs
+mediadb.getLogs = () => {
+  return new Promise((resolve, reject) => {
+    pool.query(`SELECT * FROM log`, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(results);
+    });
+  });
+};
+
+//insert log
+mediadb.log = (message) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`INSERT INTO log (message) VALUES (?)`, message, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      console.log("Log:");
+      console.log(message);
+      console.log("");
+
+      return resolve(results);
+    });
+  });
+};
+
 //Media
 //get all
 mediadb.getAll = () => {
@@ -27,12 +56,22 @@ mediadb.getAll = () => {
 //get by type
 mediadb.getAllByType = (type) => {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM media WHERE type = ?`, type, (err, results) => {
-      if (err) {
-        return reject(err);
+    pool.query(
+      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.created, 
+        type.type_id, type.name AS type, 
+        status.status_id, status.name AS status 
+        FROM media 
+        LEFT JOIN type ON media.type = type.type_id 
+        LEFT JOIN status ON media.status = status.status_id  
+        WHERE media.type = ?`,
+      type,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
       }
-      return resolve(results);
-    });
+    );
   });
 };
 
@@ -41,12 +80,12 @@ mediadb.getOne = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.created, 
-      type.type_id, type.name AS type, 
-      status.status_id, status.name AS status 
-      FROM media 
-      INNER JOIN type ON media.type = type.type_id 
-      INNER JOIN status ON media.status = status.status_id 
-      WHERE media_id = ?`,
+        type.type_id, type.name AS type, 
+        status.status_id, status.name AS status 
+        FROM media 
+        LEFT JOIN type ON media.type = type.type_id 
+        LEFT JOIN status ON media.status = status.status_id 
+        WHERE media.media_id = ?`,
       id,
       (err, results) => {
         if (err) {
@@ -65,10 +104,6 @@ mediadb.delete = (id) => {
       if (err) {
         return reject(err);
       }
-      console.log("Delete Media:");
-      console.log(id);
-      console.log("");
-
       return resolve(results);
     });
   });
@@ -81,10 +116,6 @@ mediadb.insert = (media) => {
       if (err) {
         return reject(err);
       }
-      console.log("Insert Media:");
-      console.log(media);
-      console.log("");
-
       return resolve(results);
     });
   });
@@ -160,10 +191,6 @@ mediadb.deleteHist = (id) => {
       if (err) {
         return reject(err);
       }
-      console.log("Delete History:");
-      console.log(id);
-      console.log("");
-
       return resolve(results);
     });
   });
@@ -176,11 +203,6 @@ mediadb.insertHist = (history) => {
       if (err) {
         return reject(err);
       }
-
-      console.log("Insert History:");
-      console.log(history);
-      console.log("");
-
       return resolve(results);
     });
   });
@@ -206,11 +228,6 @@ mediadb.insertPropType = (proptype) => {
       if (err) {
         return reject(err);
       }
-
-      console.log("Insert PropType:");
-      console.log(proptype);
-      console.log("");
-
       return resolve(results);
     });
   });
@@ -240,11 +257,6 @@ mediadb.insertProp = (prop) => {
       if (err) {
         return reject(err);
       }
-
-      console.log("Insert Prop:");
-      console.log(prop);
-      console.log("");
-
       return resolve(results);
     });
   });
@@ -257,10 +269,6 @@ mediadb.deleteProp = (id) => {
       if (err) {
         return reject(err);
       }
-      console.log("Delete Prop:");
-      console.log(id);
-      console.log("");
-
       return resolve(results);
     });
   });

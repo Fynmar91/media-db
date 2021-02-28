@@ -76,14 +76,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      axios
-        .get("http://" + process.env.VUE_APP_APIURL + "/api/media/" + this.id)
-        .then((response) => {
-          this.media = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
     addMedia: function() {
       axios

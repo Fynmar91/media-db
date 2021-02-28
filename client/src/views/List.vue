@@ -25,7 +25,7 @@
               <td class="align-middle">{{ item.name }}</td>
               <td class="align-middle" v-if="setRenderAddition">{{ item.addition }}</td>
               <td class="align-middle">{{ item.year }}</td>
-              <td class="align-middle">{{ statuses[item.status] }}</td>
+              <td class="align-middle">{{ item.status }}</td>
             </tr>
           </tbody>
         </table>
@@ -47,7 +47,6 @@ export default {
       list: JSON,
       currentSort: "name",
       currentSortDir: "asc",
-      types: [],
       statuses: [],
       loaded: false,
       filterStatus: "",
@@ -76,7 +75,7 @@ export default {
             return 0;
           })
           .filter((row) => {
-            const media = row.status ? this.statuses[row.status].toString().toLowerCase() : "";
+            const media = row.status ? row.status.toString().toLowerCase() : "";
             const searchTerm = this.filterStatus ? this.filterStatus.toLowerCase() : "";
             if (searchTerm == "") return 1;
             return media.includes(searchTerm);
@@ -100,16 +99,6 @@ export default {
       .get("http://" + process.env.VUE_APP_APIURL + "/api/media/type/" + this.type)
       .then((response) => {
         this.list = response.data;
-        axios
-          .get("http://" + process.env.VUE_APP_APIURL + "/api/type/")
-          .then((response) => {
-            response.data.forEach((element) => {
-              this.types[element.type_id] = element.name;
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
         axios
           .get("http://" + process.env.VUE_APP_APIURL + "/api/status/")
           .then((response) => {
