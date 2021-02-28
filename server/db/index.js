@@ -15,7 +15,7 @@ let mediadb = {};
 //get all logs
 mediadb.getLogs = () => {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM log`, (err, results) => {
+    pool.query(`SELECT * FROM log ORDER BY log_id DESC`, (err, results) => {
       if (err) {
         return reject(err);
       }

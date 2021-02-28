@@ -3,6 +3,7 @@ import Menu from "@/views/Menu.vue";
 import List from "@/views/List.vue";
 import Media from "@/views/Media.vue";
 import Add from "@/views/Add.vue";
+import Log from "@/views/Log.vue";
 
 const routes = [
   {
@@ -27,6 +28,11 @@ const routes = [
     path: "/add/:type",
     component: Add,
     props: true,
+  },
+  {
+    name: "Log",
+    path: "/log/",
+    component: Log,
   },
 ];
 

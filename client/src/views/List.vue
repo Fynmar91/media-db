@@ -2,7 +2,7 @@
   <div>
     <div class="row justify-content-center w-100 mt-3">
       <div class="btn-group-vertical mx-4" style="width: 100%; max-width: 600px;">
-        <router-link to="/" tag="button" class="btn btn-primary">Home</router-link>
+        <router-link to="/" tag="button" class="btn btn-primary">Menü</router-link>
         <router-link :to="{ name: 'Add', params: { type: type } }" tag="button" class="btn btn-secondary">Hinzufügen</router-link>
       </div>
     </div>
