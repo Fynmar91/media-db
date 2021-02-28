@@ -235,7 +235,7 @@ mediadb.insertPropType = (proptype) => {
 mediadb.getAllProps = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT proptype.name, prop.value FROM prop INNER JOIN proptype ON prop.proptype_id = proptype.proptype_id WHERE media_id = ?`,
+      `SELECT proptype.name, prop.value, prop.prop_id FROM prop INNER JOIN proptype ON prop.proptype_id = proptype.proptype_id WHERE media_id = ?`,
       id,
       (err, results) => {
         if (err) {
