@@ -30,17 +30,25 @@
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <button type="button" @click="deleteMedia()" class="btn btn-outline-danger" style="float: right;">🗑</button>
-          <h5 class="card-title">{{ media.name }} S{{ media.addition }}</h5>
-          <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
+        <div class="card-body pr-0">
+          <div class="btn-group" style="width: 100%; max-width: 600px;">
+            <div class="card-body p-0 col-11">
+              <h5 class="card-title">{{ media.name }}&emsp;{{ media.addition ? "S" + media.addition : "" }}</h5>
+              <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
+            </div>
+            <button type="button" @click="deleteMedia()" class="btn btn-outline-danger">🗑</button>
+          </div>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Erscheinungsjahr:&emsp;{{ media.year }}</li>
-          <li v-for="prop in props" :key="prop.prop_id" class="list-group-item">{{ prop.name }}:&emsp; {{ prop.value }}</li>
+          <div class="btn-group" v-for="prop in props" :key="prop.prop_id" style="width: 100%; max-width: 600px;">
+            <li class="list-group-item col-11">{{ prop.name }}:&emsp; {{ prop.value }}</li>
+            <button type="button" @click="deleteProp(prop.prop_id)" class="btn btn-outline-danger">🗑</button>
+          </div>
         </ul>
         <div class="card-body">
-          <a href="#" @click="toggleHistAdd" class="card-link">Eintrag</a>
+          <a href="#" @click="toggleHistAdd" class="card-link">Neuer Eintrag</a>
+          <a href="#" @click="togglePropAdd" class="card-link">Neues Datenfeld</a>
           <a :href="infoLink(type_id)" target="_blank" class="card-link">Info</a>
         </div>
         <div class="card-footer text-muted">
@@ -49,6 +57,7 @@
       </div>
       <div class="w-100">
         <addHistory v-if="add_history" @update="update" v-bind:id="id" :key="id"> </addHistory>
+        <addProp v-if="add_prop" @update="update" v-bind:id="id" :key="id"> </addProp>
       </div>
       <div class="w-100">
         <history v-if="render_history" @update="update" v-for="item in history" v-bind:history="item" :key="id + '-' + item.history_id"></history>
@@ -60,10 +69,11 @@
 <script>
 import axios from "axios";
 import AddHistory from "@/components/AddHistory.vue";
+import AddProp from "@/components/AddProp.vue";
 import History from "@/components/History.vue";
 
 export default {
-  components: { AddHistory, History },
+  components: { AddHistory, AddProp, History },
   name: "Media",
   props: {
     id: null,
@@ -83,6 +93,7 @@ export default {
       edit_status: false,
       edit_type: false,
       add_history: false,
+      add_prop: false,
       render_history: false,
     };
   },
@@ -106,6 +117,9 @@ export default {
     },
     toggleHistAdd: function() {
       this.add_history = !this.add_history;
+    },
+    togglePropAdd: function() {
+      this.add_prop = !this.add_prop;
     },
     statusClass: function(status) {
       switch (status) {
@@ -226,6 +240,19 @@ export default {
           .delete("http://" + process.env.VUE_APP_APIURL + "/api/media/delete/" + this.media.media_id)
           .then((response) => {
             this.$router.push({ path: "/list" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    deleteProp: function(id) {
+      var result = confirm("Wirklich löschen?");
+      if (result) {
+        axios
+          .delete("http://" + process.env.VUE_APP_APIURL + "/api/prop/delete/" + id)
+          .then((response) => {
+            this.update();
           })
           .catch((error) => {
             console.log(error);

@@ -55,6 +55,10 @@ router.delete("/media/delete/:id", async (req, res) => {
     for (const iterator of hist) {
       await db.deleteHist(iterator.history_id);
     }
+    let prop = await db.getAllProps(req.params.id);
+    for (const iterator of prop) {
+      await db.deleteProp(iterator.history_id);
+    }
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
@@ -232,6 +236,17 @@ router.post("/prop/insert/", async (req, res) => {
     prop[1] = req.body.proptype_id;
     prop[2] = req.body.value;
     await db.insertProp(prop);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+//delete
+router.delete("/prop/delete/:id", async (req, res) => {
+  try {
+    await db.deleteProp(req.params.id);
     res.sendStatus(200);
   } catch (error) {
     console.log(error);

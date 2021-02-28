@@ -201,7 +201,7 @@ mediadb.insertHist = (history) => {
 };
 
 //Property Type
-//get all properties for media
+//get all propTypes for media
 mediadb.getAllPropTypes = () => {
   return new Promise((resolve, reject) => {
     pool.query(`SELECT * FROM proptype`, (err, results) => {
@@ -213,18 +213,7 @@ mediadb.getAllPropTypes = () => {
   });
 };
 
-mediadb.getPropType = (id) => {
-  return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM proptype WHERE proptype_id = ?`, id, (err, results) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(results);
-    });
-  });
-};
-
-//insert property
+//insert propType
 mediadb.insertPropType = (proptype) => {
   return new Promise((resolve, reject) => {
     pool.query(`INSERT INTO proptype (name, rank) VALUES (?, ?)`, proptype, (err, results) => {
@@ -242,7 +231,7 @@ mediadb.insertPropType = (proptype) => {
 };
 
 //Property
-//get all properties for media
+//get all props for media
 mediadb.getAllProps = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -258,7 +247,7 @@ mediadb.getAllProps = (id) => {
   });
 };
 
-//insert property
+//insert prop
 mediadb.insertProp = (prop) => {
   return new Promise((resolve, reject) => {
     pool.query(`INSERT INTO prop (media_id, proptype_id, value) VALUES (?, ?, ?)`, prop, (err, results) => {
@@ -268,6 +257,22 @@ mediadb.insertProp = (prop) => {
 
       console.log("Insert Prop:");
       console.log(prop);
+      console.log("");
+
+      return resolve(results);
+    });
+  });
+};
+
+//delete prop
+mediadb.deleteProp = (id) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`DELETE FROM prop WHERE prop_id = ?`, id, (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      console.log("Delete Prop:");
+      console.log(id);
       console.log("");
 
       return resolve(results);

@@ -16,14 +16,14 @@
         <table class="table table-hover w-auto mx-auto">
           <thead>
             <th @click="sort('name')">Name</th>
-            <th @click="sort('addition')">Staffel</th>
+            <th @click="sort('addition')" v-if="setRenderAddition">Staffel</th>
             <th @click="sort('year')">Jahr</th>
             <th @click="sort('status')">Status</th>
           </thead>
           <tbody>
             <tr v-for="item in sortedMedia" @click="onRowClick(item.media_id)" :key="item.media_id">
               <td class="align-middle">{{ item.name }}</td>
-              <td class="align-middle">{{ item.addition }}</td>
+              <td class="align-middle" v-if="setRenderAddition">{{ item.addition }}</td>
               <td class="align-middle">{{ item.year }}</td>
               <td class="align-middle">{{ statuses[item.status] }}</td>
             </tr>
@@ -54,6 +54,17 @@ export default {
     };
   },
   computed: {
+    setRenderAddition: function() {
+      switch (this.type) {
+        case "1":
+          return true;
+        case "2":
+        case "3":
+          return false;
+        default:
+          return false;
+      }
+    },
     sortedMedia: function() {
       if (this.loaded && this.statuses.length != 0) {
         return this.list
