@@ -29,6 +29,7 @@ router.get("/media/type/:type", async (req, res) => {
 router.get("/media/:id", async (req, res) => {
   try {
     let results = await db.getOne(req.params.id);
+    console.log(results);
     res.json(results);
   } catch (error) {
     console.log(error);
@@ -118,33 +119,11 @@ router.get("/type/", async (req, res) => {
   }
 });
 
-//select type
-router.get("/type/:type", async (req, res) => {
-  try {
-    let results = await db.getType(req.params.type);
-    res.json(results);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
-
 //Status
 //select all statuses
 router.get("/status/", async (req, res) => {
   try {
     let results = await db.getStatuses();
-    res.json(results);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
-
-//select status
-router.get("/status/:status", async (req, res) => {
-  try {
-    let results = await db.getStatus(req.params.status);
     res.json(results);
   } catch (error) {
     console.log(error);

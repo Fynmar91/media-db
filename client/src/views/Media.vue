@@ -177,30 +177,16 @@ export default {
         .then((response) => {
           this.media = response.data;
           this.name = this.media.name;
-          this.type_id = this.media.type;
-          this.status_id = this.media.status;
+          this.type_id = this.media.type_id;
+          this.status_id = this.media.status_id;
           this.date = this.media.created.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, "$3.$2.$1");
+          this.type = response.data.type;
+          this.status = response.data.status;
           axios
             .get("http://" + process.env.VUE_APP_APIURL + "/api/history/" + this.media.media_id)
             .then((response) => {
               this.history = response.data;
               this.render_history = true;
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-          axios
-            .get("http://" + process.env.VUE_APP_APIURL + "/api/type/" + this.type_id)
-            .then((response) => {
-              this.type = response.data.name;
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-          axios
-            .get("http://" + process.env.VUE_APP_APIURL + "/api/status/" + this.status_id)
-            .then((response) => {
-              this.status = response.data.name;
             })
             .catch((error) => {
               console.log(error);

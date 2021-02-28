@@ -39,12 +39,22 @@ mediadb.getAllByType = (type) => {
 //get one
 mediadb.getOne = (id) => {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM media WHERE media_id = ?`, id, (err, results) => {
-      if (err) {
-        return reject(err);
+    pool.query(
+      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.created, 
+      type.type_id, type.name AS type, 
+      status.status_id, status.name AS status 
+      FROM media 
+      INNER JOIN type ON media.type = type.type_id 
+      INNER JOIN status ON media.status = status.status_id 
+      WHERE media_id = ?`,
+      id,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results[0]);
       }
-      return resolve(results[0]);
-    });
+    );
   });
 };
 
@@ -117,18 +127,6 @@ mediadb.getTypes = (id) => {
   });
 };
 
-//get one type
-mediadb.getType = (type) => {
-  return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM type WHERE type_id = ?`, type, (err, results) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(results[0]);
-    });
-  });
-};
-
 //Status
 //get all statuses
 mediadb.getStatuses = (id) => {
@@ -138,18 +136,6 @@ mediadb.getStatuses = (id) => {
         return reject(err);
       }
       return resolve(results);
-    });
-  });
-};
-
-//get one status
-mediadb.getStatus = (type) => {
-  return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM status WHERE status_id = ?`, type, (err, results) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(results[0]);
     });
   });
 };
