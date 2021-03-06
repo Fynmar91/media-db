@@ -34,7 +34,7 @@
         <div class="card-body pr-0">
           <div class="btn-group" style="width: 100%; max-width: 600px;">
             <div class="card-body p-0 col-11">
-              <h5 class="card-title">{{ media.name }}&emsp;{{ media.addition ? "S" + media.addition : "" }}</h5>
+              <h5 class="card-title">{{ media.name }}&emsp;{{ media.addition ? prefix + media.addition : "" }}</h5>
               <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
             </div>
             <button type="button" @click="deleteMedia()" class="btn btn-outline-primary">🗑</button>
@@ -97,6 +97,19 @@ export default {
       add_prop: false,
       render_history: false,
     };
+  },
+  computed: {
+    prefix: function() {
+      switch (this.type_id) {
+        case 1:
+        case 5:
+          return "Staffel ";
+        case 3:
+          return "Band ";
+        default:
+          return "";
+      }
+    },
   },
   methods: {
     infoLink: function(type) {
