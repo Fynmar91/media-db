@@ -44,12 +44,20 @@ mediadb.log = (message) => {
 //get all
 mediadb.getAll = () => {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM media`, (err, results) => {
-      if (err) {
-        return reject(err);
+    pool.query(
+      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.created, 
+      type.type_id, type.name AS type, 
+      status.status_id, status.name AS status 
+      FROM media 
+      LEFT JOIN type ON media.type = type.type_id 
+      LEFT JOIN status ON media.status = status.status_id `,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
       }
-      return resolve(results);
-    });
+    );
   });
 };
 

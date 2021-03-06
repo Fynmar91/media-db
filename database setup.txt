@@ -34,6 +34,10 @@ INSERT INTO type (name) VALUES ("Serie");
 INSERT INTO type (name) VALUES ("Film");
 INSERT INTO type (name) VALUES ("Buch");
 
+INSERT INTO type (name) VALUES ("Webnovel");
+INSERT INTO type (name) VALUES ("Anime");
+INSERT INTO type (name) VALUES ("Animefilm");
+
 
 CREATE TABLE status (     
 status_id int NOT NULL AUTO_INCREMENT,     

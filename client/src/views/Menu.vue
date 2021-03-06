@@ -11,6 +11,9 @@
         <router-link :to="{ name: 'List', params: { type: 1 } }" tag="button" class="btn btn-secondary">Serien</router-link>
         <router-link :to="{ name: 'List', params: { type: 2 } }" tag="button" class="btn btn-secondary">Filme</router-link>
         <router-link :to="{ name: 'List', params: { type: 3 } }" tag="button" class="btn btn-secondary">Bücher</router-link>
+        <router-link :to="{ name: 'List', params: { type: 4 } }" tag="button" class="btn btn-secondary">Webnovels</router-link>
+        <router-link :to="{ name: 'List', params: { type: 5 } }" tag="button" class="btn btn-secondary">Anime</router-link>
+        <router-link :to="{ name: 'List', params: { type: 6 } }" tag="button" class="btn btn-secondary">Anime-Filme</router-link>
         <router-link to="/log" tag="button" class="btn btn-secondary mt-3">Logs</router-link>
       </div>
     </div>

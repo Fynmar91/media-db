@@ -57,9 +57,11 @@ export default {
       switch (this.type) {
         case "0":
         case "1":
+        case "3":
+        case "5":
           return true;
         case "2":
-        case "3":
+        case "4":
           return false;
         default:
           return false;
