@@ -1,0 +1,83 @@
+CREATE TABLE log (     
+log_id int NOT NULL AUTO_INCREMENT,     
+message varchar(255) NOT NULL,
+created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,     
+PRIMARY KEY (log_id) );
+
+CREATE TABLE media (     
+media_id int NOT NULL AUTO_INCREMENT,     
+name varchar(120) NOT NULL,  
+altname varchar(120),    
+addition varchar(24),
+year varchar(12),
+type int,
+status int,
+created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,     
+PRIMARY KEY (media_id) );
+
+INSERT INTO media (name, year, type, status) VALUES ("Stargate SG-1", 1997, 1, 1);
+INSERT INTO media (name, altname, year, type, status) VALUES ("Ghost in the Shell", "Kôkaku Kidôtai", 1995, 2, 1);
+INSERT INTO media (name, altname, year, type) VALUES ("Test", "no status", 1995, 2);
+INSERT INTO media (name, altname, year, status) VALUES ("Test", "no type", 1995, 2);
+UPDATE media SET status = 2, type = null WHERE media_id = 4;
+UPDATE media SET status = ? WHERE media_id = ?;
+ALTER TABLE media
+ADD addition varchar(24); 
+
+CREATE TABLE type (     
+type_id int NOT NULL AUTO_INCREMENT,     
+name varchar(120) NOT NULL,
+created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,     
+PRIMARY KEY (type_id) );
+
+INSERT INTO type (name) VALUES ("Serie");
+INSERT INTO type (name) VALUES ("Film");
+INSERT INTO type (name) VALUES ("Buch");
+
+
+CREATE TABLE status (     
+status_id int NOT NULL AUTO_INCREMENT,     
+name varchar(120) NOT NULL,
+created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,     
+PRIMARY KEY (status_id) );
+
+INSERT INTO status (name) VALUES ("Fertig");
+INSERT INTO status (name) VALUES ("Angefangen");
+INSERT INTO status (name) VALUES ("Abgebrochen");
+INSERT INTO status (name) VALUES ("Warteschlange");
+UPDATE status SET name = "Warteschlange" WHERE status_id = 4;
+
+
+CREATE TABLE history (     
+history_id int NOT NULL AUTO_INCREMENT,
+media_id int NOT NULL,         
+description varchar(120) NOT NULL,  
+date TIMESTAMP NOT NULL,
+created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,     
+PRIMARY KEY (history_id) );
+
+INSERT INTO history (media_id, description, date) 
+VALUES (19, "E1", '2014-07-02 06:14:00.742000000');
+
+
+CREATE TABLE proptype (
+proptype_id int NOT NULL AUTO_INCREMENT,
+name varchar(120) NOT NULL,
+rank int NOT NULL,
+created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (proptype_id) );
+
+INSERT INTO proptype (name, rank) 
+VALUES ("Author", 1);
+
+
+CREATE TABLE prop (     
+prop_id int NOT NULL AUTO_INCREMENT,
+media_id int NOT NULL,
+proptype_id int NOT NULL,
+value varchar(120) NOT NULL,
+created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (prop_id) );
+
+INSERT INTO prop (media_id, proptype_id, value) 
+VALUES (37, 1, "Douglas Adams");
