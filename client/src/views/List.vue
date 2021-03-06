@@ -55,6 +55,7 @@ export default {
   computed: {
     setRenderAddition: function() {
       switch (this.type) {
+        case "0":
         case "1":
           return true;
         case "2":
@@ -95,8 +96,10 @@ export default {
     },
   },
   mounted() {
+    let target = "/api/media/";
+    if (this.type != 0) target += "type/" + this.type;
     axios
-      .get("http://" + process.env.VUE_APP_APIURL + "/api/media/type/" + this.type)
+      .get("http://" + process.env.VUE_APP_APIURL + target)
       .then((response) => {
         this.list = response.data;
         axios
