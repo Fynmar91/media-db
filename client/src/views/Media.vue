@@ -22,6 +22,7 @@
           <div class="col-6 card-header" style="clear: both" @dblclick="click_status">
             <div>
               <select v-if="edit_status" @change="change_status($event)" class="custom-select col-8" style="float: right;">
+                <option key="null" :value="null" selected></option>
                 <option v-for="item in statuses" :key="item.status_id" :value="item.status_id" :selected="item.status_id == media.status_id">
                   {{ item.name }}</option
                 >
@@ -136,7 +137,7 @@ export default {
       }
     },
     change_status(event) {
-      if (event.target.value != this.media.status) {
+      if (event.target.value != null && event.target.value != this.media.status) {
         axios
           .put("http://" + process.env.VUE_APP_APIURL + "/api/media/update/status/" + this.media.media_id + "/" + event.target.value)
           .then((response) => {

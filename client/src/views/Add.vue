@@ -13,11 +13,11 @@
       <div class="card mb-3 mx-4" style="width: 600px;">
         <div class="card-header" style="clear: both">
           <select class="custom-select col-4" v-model="input_type" style="float: left;">
-            <option v-for="item in types" :key="item.type_id" :value="item.type_id" :selected="item.type_id == 1"> {{ item.name }}</option>
+            <option v-for="item in types" :key="item.type_id" :value="item.type_id"> {{ item.name }}</option>
           </select>
           <div>
             <select class="custom-select col-4" v-model="input_status" style="float: right;">
-              <option v-for="item in statuses" :key="item.status_id" :value="item.status_id" :selected="item.status_id == 4"> {{ item.name }}</option>
+              <option v-for="item in statuses" :key="item.status_id" :value="item.status_id"> {{ item.name }}</option>
             </select>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default {
       input_addition: null,
       input_type: this.type,
       input_year: null,
-      input_status: null,
+      input_status: 2,
       statuses: JSON,
       types: JSON,
     };

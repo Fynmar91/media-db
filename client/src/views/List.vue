@@ -10,7 +10,7 @@
       <div class="col-12">
         <div class="row justify-content-center">
           <select class="custom-select col-2 mx-2" v-model="filterStatus" style="min-width: 150px; max-width: 150px;">
-            <option v-for="item in statuses" :key="item" :value="item" :selected="item == null">{{ item }}</option>
+            <option v-for="item in statuses" :key="item" :value="item">{{ item }}</option>
           </select>
         </div>
         <table class="table table-hover w-auto mx-auto">
@@ -49,7 +49,7 @@ export default {
       currentSortDir: "asc",
       statuses: [],
       loaded: false,
-      filterStatus: "",
+      filterStatus: "Angefangen",
     };
   },
   computed: {
