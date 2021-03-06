@@ -14,7 +14,7 @@
           <div class="col-6 card-header" style="clear: both" @dblclick="click_type">
             <div>
               <select v-if="edit_type" @change="change_type($event)" class="custom-select col-8">
-                <option v-for="item in types" :key="item.type_id" :value="item.type_id" :selected="item.type_id == media.type"> {{ item.name }}</option>
+                <option v-for="item in types" :key="item.type_id" :value="item.type_id" :selected="item.type_id == media.type_id"> {{ item.name }}</option>
               </select>
               <h3 v-else style="float: left;">{{ type || "Leer" }}</h3>
             </div>
@@ -22,7 +22,7 @@
           <div class="col-6 card-header" style="clear: both" @dblclick="click_status">
             <div>
               <select v-if="edit_status" @change="change_status($event)" class="custom-select col-8" style="float: right;">
-                <option v-for="item in statuses" :key="item.status_id" :value="item.status_id" :selected="item.status_id == media.status">
+                <option v-for="item in statuses" :key="item.status_id" :value="item.status_id" :selected="item.status_id == media.status_id">
                   {{ item.name }}</option
                 >
               </select>
