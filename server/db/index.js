@@ -112,6 +112,7 @@ mediadb.delete = (id) => {
       if (err) {
         return reject(err);
       }
+      mediadb.log("Delete media: " + id + " " + JSON.stringify(results));
       return resolve(results);
     });
   });
@@ -124,6 +125,7 @@ mediadb.insert = (media) => {
       if (err) {
         return reject(err);
       }
+      mediadb.log("Insert media: " + media + " " + JSON.stringify(results));
       return resolve(results.insertId);
     });
   });
@@ -136,6 +138,7 @@ mediadb.setStatus = (id, status) => {
       if (err) {
         return reject(err);
       }
+      mediadb.log("Update status of media: " + id + "  to: " + status + " " + JSON.stringify(results));
       return resolve(results);
     });
   });
@@ -148,6 +151,7 @@ mediadb.setType = (id, status) => {
       if (err) {
         return reject(err);
       }
+      mediadb.log("Update type of media: " + id + "  to: " + status + " " + JSON.stringify(results));
       return resolve(results);
     });
   });
@@ -199,6 +203,7 @@ mediadb.deleteHist = (id) => {
       if (err) {
         return reject(err);
       }
+      mediadb.log("Delete history: " + id + " " + JSON.stringify(results));
       return resolve(results);
     });
   });
@@ -211,6 +216,7 @@ mediadb.insertHist = (history) => {
       if (err) {
         return reject(err);
       }
+      mediadb.log("Insert history: " + history + " " + JSON.stringify(results));
       return resolve(results);
     });
   });
@@ -236,6 +242,7 @@ mediadb.insertPropType = (proptype) => {
       if (err) {
         return reject(err);
       }
+      mediadb.log("Insert prop type: " + proptype + " " + JSON.stringify(results));
       return resolve(results);
     });
   });
@@ -265,6 +272,7 @@ mediadb.insertProp = (prop) => {
       if (err) {
         return reject(err);
       }
+      mediadb.log("Insert prop: " + prop + " " + JSON.stringify(results));
       return resolve(results);
     });
   });
@@ -277,6 +285,7 @@ mediadb.deleteProp = (id) => {
       if (err) {
         return reject(err);
       }
+      mediadb.log("Delete prop: " + id + " " + JSON.stringify(results));
       return resolve(results);
     });
   });

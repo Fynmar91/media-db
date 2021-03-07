@@ -6,6 +6,7 @@
         <router-link :to="{ name: 'List', params: { type: type_id } }" tag="button" class="btn btn-secondary" style="width: 100%; max-width: 600px;"
           >Liste</router-link
         >
+        <router-link :to="{ name: 'Add', params: { type: type_id } }" tag="button" class="btn btn-secondary">Hinzufügen</router-link>
       </div>
     </div>
     <div class="row justify-content-center w-100 my-3">
