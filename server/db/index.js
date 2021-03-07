@@ -124,7 +124,7 @@ mediadb.insert = (media) => {
       if (err) {
         return reject(err);
       }
-      return resolve(results);
+      return resolve(results.insertId);
     });
   });
 };

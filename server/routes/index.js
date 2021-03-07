@@ -111,9 +111,9 @@ router.post("/media/insert/", async (req, res) => {
     media[3] = req.body.year;
     media[4] = req.body.type;
     media[5] = req.body.status;
-    await db.insert(media);
+    let id = await db.insert(media);
     await db.log(["Insert Media: " + media]);
-    res.sendStatus(200);
+    res.json(id);
   } catch (error) {
     console.log(error);
     await db.log(error);

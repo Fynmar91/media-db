@@ -88,7 +88,7 @@ export default {
           status: this.input_status,
         })
         .then((response) => {
-          this.$router.push({ path: "/list/" + this.type });
+          this.$router.push({ path: "/media/" + response.data });
         })
         .catch((error) => {
           console.log(error);
