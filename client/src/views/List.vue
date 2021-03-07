@@ -9,9 +9,26 @@
     <div class="row justify-content-center w-100 mt-3">
       <div class="col-12">
         <div class="row justify-content-center">
-          <select class="custom-select col-2 mx-2" v-model="filterStatus" style="min-width: 150px; max-width: 150px;">
-            <option v-for="item in statuses" :key="item" :value="item">{{ item }}</option>
-          </select>
+          <div class="form-group mr-2">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" value="Fertig" v-model="checkbox_status" id="customCheck1" />
+              <label class="custom-control-label" for="customCheck1">Fertig</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" value="Warteschlange" v-model="checkbox_status" id="customCheck2" />
+              <label class="custom-control-label" for="customCheck2">Warteschlange</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" value="Angefangen" v-model="checkbox_status" id="customCheck3" />
+              <label class="custom-control-label" for="customCheck3">Angefangen</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" value="Abgebrochen" v-model="checkbox_status" id="customCheck4" />
+              <label class="custom-control-label" for="customCheck4">Abgebrochen</label>
+            </div>
+          </div>
         </div>
         <table class="table table-hover w-auto mx-auto">
           <thead>
@@ -50,6 +67,7 @@ export default {
       statuses: [],
       loaded: false,
       filterStatus: "Angefangen",
+      checkbox_status: [],
     };
   },
   computed: {
@@ -80,8 +98,8 @@ export default {
           .filter((row) => {
             const media = row.status ? row.status.toString().toLowerCase() : "";
             const searchTerm = this.filterStatus ? this.filterStatus.toLowerCase() : "";
-            if (searchTerm == "") return 1;
-            return media.includes(searchTerm);
+            if (this.checkbox_status.length == 0) return 1;
+            return this.checkbox_status.some((substring) => media.includes(substring.toLowerCase()));
           });
       }
     },
