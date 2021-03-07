@@ -35,6 +35,14 @@
             <input class="form-control form-control-sm" @keyup.enter.native="searchM" v-model="search" type="text" placeholder="Suche" id="inputSmall" />
           </div>
         </div>
+        <div class="row justify-content-center">
+          <div class="form-group" style="width: 100%; max-width: 600px;">
+            <button type="button" class="btn btn-primary btn-sm" @click="sort('created')">Erstelldatum</button>
+            <button type="button" class="btn btn-primary btn-sm" style="float: right;">
+              {{ currentSortDir == "desc" ? "▲" : "▼" }}
+            </button>
+          </div>
+        </div>
         <table class="table table-hover w-auto mx-auto">
           <thead>
             <th @click="sort('name')">Name</th>
@@ -67,8 +75,8 @@ export default {
   data() {
     return {
       list: JSON,
-      currentSort: "name",
-      currentSortDir: "asc",
+      currentSort: "created",
+      currentSortDir: "desc",
       statuses: [],
       loaded: false,
       filterStatus: "Angefangen",
