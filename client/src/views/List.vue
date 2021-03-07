@@ -30,6 +30,11 @@
             </div>
           </div>
         </div>
+        <div class="row justify-content-center">
+          <div class="form-group" style="width: 100%; max-width: 600px;">
+            <input class="form-control form-control-sm" @keyup.enter.native="searchM" v-model="search" type="text" placeholder="Suche" id="inputSmall" />
+          </div>
+        </div>
         <table class="table table-hover w-auto mx-auto">
           <thead>
             <th @click="sort('name')">Name</th>
@@ -68,6 +73,8 @@ export default {
       loaded: false,
       filterStatus: "Angefangen",
       checkbox_status: [],
+      search: "",
+      searchCommit: "",
     };
   },
   computed: {
@@ -97,9 +104,16 @@ export default {
           })
           .filter((row) => {
             const media = row.status ? row.status.toString().toLowerCase() : "";
-            const searchTerm = this.filterStatus ? this.filterStatus.toLowerCase() : "";
             if (this.checkbox_status.length == 0) return 1;
             return this.checkbox_status.some((substring) => media.includes(substring.toLowerCase()));
+          })
+          .filter((row) => {
+            const searchTerm = this.searchCommit.toLowerCase();
+            console.log(searchTerm);
+            if (searchTerm == "") return 1;
+            const media = JSON.stringify(Object.values(row)).toLowerCase();
+            console.log(media);
+            return media.includes(searchTerm);
           });
       }
     },
@@ -113,6 +127,9 @@ export default {
         this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
       }
       this.currentSort = s;
+    },
+    searchM: function(s) {
+      this.searchCommit = this.search;
     },
   },
   mounted() {
