@@ -42,7 +42,10 @@
           </div>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Erscheinungsjahr:&emsp;{{ media.year }}</li>
+          <li class="list-group-item">
+            <div style="float: right;">{{ media.media_id }}</div>
+            <div>Erscheinungsjahr:&emsp;{{ media.year }}</div>
+          </li>
           <div class="btn-group" v-for="prop in props" :key="prop.prop_id" style="width: 100%; max-width: 600px;">
             <li class="list-group-item col-11">{{ prop.name }}:&emsp; {{ prop.value }}</li>
             <button type="button" @click="deleteProp(prop.prop_id)" class="btn btn-outline-primary">🗑</button>
