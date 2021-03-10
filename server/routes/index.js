@@ -44,6 +44,7 @@ router.get("/media/", async (req, res) => {
 router.get("/media/type/:type", async (req, res) => {
   try {
     let results = await db.getAllByType(req.params.type);
+    console.log(results);
     res.json(results);
   } catch (error) {
     console.log(error);
