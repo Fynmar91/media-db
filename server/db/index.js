@@ -187,7 +187,7 @@ mediadb.getStatuses = (id) => {
 //get all histories for media
 mediadb.getAllHist = (id) => {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM history WHERE media_id = ? ORDER BY created DESC`, id, (err, results) => {
+    pool.query(`SELECT * FROM history WHERE media_id = ? ORDER BY created ASC`, id, (err, results) => {
       if (err) {
         return reject(err);
       }
