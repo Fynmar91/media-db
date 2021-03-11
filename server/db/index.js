@@ -45,12 +45,14 @@ mediadb.log = (message) => {
 mediadb.getAll = () => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.created, 
+      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year,  
       type.type_id, type.name AS type, 
-      status.status_id, status.name AS status 
+      status.status_id, status.name AS status,
+      CASE WHEN h.date IS NOT NULL THEN h.date ELSE media.created END AS created
       FROM media 
       LEFT JOIN type ON media.type = type.type_id 
-      LEFT JOIN status ON media.status = status.status_id `,
+      LEFT JOIN status ON media.status = status.status_id  
+      LEFT JOIN (SELECT DISTINCT max(date) AS date, media_id FROM history GROUP BY media_id DESC) h ON media.media_id = h.media_id `,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -65,12 +67,14 @@ mediadb.getAll = () => {
 mediadb.getAllByType = (type) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.created, 
+      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year,  
         type.type_id, type.name AS type, 
-        status.status_id, status.name AS status 
+        status.status_id, status.name AS status,
+        CASE WHEN h.date IS NOT NULL THEN h.date ELSE media.created END AS created
         FROM media 
         LEFT JOIN type ON media.type = type.type_id 
         LEFT JOIN status ON media.status = status.status_id  
+        LEFT JOIN (SELECT DISTINCT max(date) AS date, media_id FROM history GROUP BY media_id DESC) h ON media.media_id = h.media_id 
         WHERE media.type = ?`,
       type,
       (err, results) => {

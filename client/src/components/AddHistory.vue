@@ -13,7 +13,7 @@
 <script setup>
 import datepicker from "vue3-datepicker";
 import { ref } from "vue";
-const input_date = ref(new Date());
+const input_date = new Date();
 </script>
 
 <script>
