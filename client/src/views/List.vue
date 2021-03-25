@@ -37,9 +37,9 @@
         </div>
         <div class="row justify-content-center">
           <div class="form-group" style="width: 100%; max-width: 600px;">
-            <button type="button" class="btn btn-primary btn-sm" @click="sort('created')">Erstelldatum</button>
+            <button type="button" class="btn btn-primary btn-sm" @click="sort('created')">Aktivität</button>
             <button type="button" class="btn btn-primary btn-sm" style="float: right;">
-              {{ currentSortDir == "desc" ? "▲" : "▼" }}
+              {{ currentSortDir == "desc" ? "▼" : "▲" }}
             </button>
           </div>
         </div>
