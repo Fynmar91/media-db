@@ -7,7 +7,7 @@
             <h4 class="card-title">{{ history.description }}</h4>
             <h6 class="card-subtitle text-muted">{{ date }}</h6>
           </div>
-          <button type="button" @click="deleteHistory()" class="btn btn-outline-primary">🗑</button>
+          <a type="button" @click="deleteHistory()" class="trashcan">🗑</a>
         </div>
       </div>
     </div>

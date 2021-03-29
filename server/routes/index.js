@@ -142,6 +142,18 @@ router.put("/media/update/type/:id/:type", async (req, res) => {
   }
 });
 
+//update rating
+router.put("/media/update/type/:id/:rating", async (req, res) => {
+  try {
+    await db.setType(req.params.id, req.params.rating);
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    await db.log(JSON.stringify(error));
+    res.sendStatus(500);
+  }
+});
+
 //Type
 //select all types
 router.get("/type/", async (req, res) => {

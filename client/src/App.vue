@@ -16,7 +16,6 @@ export default {
   font-family: "Lato";
   src: local("Lato"), url(./fonts/Lato/Lato-Regular.ttf) format("truetype");
 }
-
 body {
   font-family: "Lato", Helvetica, Arial;
   background-color: #202326;
@@ -30,5 +29,14 @@ body {
 .row {
   margin-right: auto;
   margin-left: auto;
+}
+
+.trashcan {
+  font-size: 1.75rem;
+  color: #df691a;
+}
+.trashcan:hover {
+  color: #df521a;
+  text-decoration: none;
 }
 </style>

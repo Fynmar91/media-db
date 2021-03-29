@@ -15,6 +15,7 @@
           <div class="col-6 card-header" style="clear: both" @dblclick="click_type">
             <div>
               <select v-if="edit_type" @change="change_type($event)" class="custom-select col-8">
+                <option key="null" :value="null" selected></option>
                 <option v-for="item in types" :key="item.type_id" :value="item.type_id" :selected="item.type_id == media.type_id"> {{ item.name }}</option>
               </select>
               <h3 v-else style="float: left;">{{ type || "Leer" }}</h3>
@@ -38,7 +39,7 @@
               <h5 class="card-title">{{ media.name }}&emsp;{{ media.addition ? prefix + media.addition : "" }}</h5>
               <h6 class="card-subtitle text-muted">{{ media.altname }}</h6>
             </div>
-            <button type="button" @click="deleteMedia()" class="btn btn-outline-primary">🗑</button>
+            <a type="button" @click="deleteMedia()" class="trashcan">🗑</a>
           </div>
         </div>
         <ul class="list-group list-group-flush">
@@ -48,10 +49,21 @@
           </li>
           <div class="btn-group" v-for="prop in props" :key="prop.prop_id" style="width: 100%; max-width: 600px;">
             <li class="list-group-item col-11">{{ prop.name }}:&emsp; {{ prop.value }}</li>
-            <button type="button" @click="deleteProp(prop.prop_id)" class="btn btn-outline-primary">🗑</button>
+            <a type="button" @click="deleteProp(prop.prop_id)" class="trashcan">🗑</a>
           </div>
         </ul>
         <div class="card-body">
+          <div @dblclick="click_rating">
+            <div>
+              <select v-if="edit_rating" @change="change_rating($event)" style="float: right;">
+                <option key="null" :value="null" selected></option>
+                <option key="0" :value="0" selected>0</option>
+                <option key="50" :value="50" selected>50</option>
+                <option key="100" :value="100" selected>100</option>
+              </select>
+              <a v-else href="#" class="card-link" :class="ratingClass(media.rating)"> ▮▮▮ </a>
+            </div>
+          </div>
           <a href="#" @click="toggleHistAdd" class="card-link">Neuer Eintrag</a>
           <a href="#" @click="togglePropAdd" class="card-link">Neues Datenfeld</a>
           <a :href="infoLink(type_id)" target="_blank" class="card-link">Info</a>
@@ -64,8 +76,8 @@
         <addHistory v-if="add_history" @update="update" v-bind:id="id" :key="id"> </addHistory>
         <addProp v-if="add_prop" @update="update" v-bind:id="id" :key="id"> </addProp>
       </div>
-      <div class="w-100">
-        <history v-if="render_history" @update="update" v-for="item in history" v-bind:history="item" :key="id + '-' + item.history_id"></history>
+      <div class="w-100" v-if="render_history">
+        <history @update="update" v-for="item in history" v-bind:history="item" :key="id + '-' + item.history_id"></history>
       </div>
     </div>
   </div>
@@ -97,6 +109,7 @@ export default {
       props: JSON,
       edit_status: false,
       edit_type: false,
+      edit_rating: false,
       add_history: false,
       add_prop: false,
       render_history: false,
@@ -116,6 +129,18 @@ export default {
     },
   },
   methods: {
+    ratingClass(rating) {
+      switch (rating) {
+        case 100:
+          return "rating-green";
+        case 50:
+          return "rating-yellow";
+        case 0:
+          return "rating-red";
+        default:
+          return "rating-null";
+      }
+    },
     infoLink: function(type) {
       switch (type) {
         case 1:
@@ -132,6 +157,9 @@ export default {
     },
     click_type: function() {
       this.edit_type = !this.edit_type;
+    },
+    click_rating: function() {
+      this.edit_rating = !this.edit_rating;
     },
     toggleHistAdd: function() {
       this.add_history = !this.add_history;
@@ -154,7 +182,7 @@ export default {
       }
     },
     change_status(event) {
-      if (event.target.value != null && event.target.value != this.media.status) {
+      if (event.target.value != "" && event.target.value != this.media.status) {
         axios
           .put("http://" + process.env.VUE_APP_APIURL + "/api/media/update/status/" + this.media.media_id + "/" + event.target.value)
           .then((response) => {
@@ -171,7 +199,7 @@ export default {
       this.click_status();
     },
     change_type(event) {
-      if (event.target.value != this.media.type) {
+      if (event.target.value != "" && event.target.value != this.media.type) {
         axios
           .put("http://" + process.env.VUE_APP_APIURL + "/api/media/update/type/" + this.media.media_id + "/" + event.target.value)
           .then((response) => {
@@ -186,6 +214,23 @@ export default {
           });
       }
       this.click_type();
+    },
+    change_rating(event) {
+      if (event.target.value != "" && event.target.value != this.media.rating) {
+        axios
+          .put("http://" + process.env.VUE_APP_APIURL + "/api/media/update/rating/" + this.media.media_id + "/" + event.target.rating)
+          .then((response) => {
+            if (response.status == 200) {
+              this.update();
+            } else {
+              console.log(response);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      this.click_rating();
     },
     update: function() {
       this.add_history = false;
@@ -275,4 +320,25 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.rating-green {
+  color: rgb(78, 211, 52);
+  float: right;
+  margin-right: 12px;
+}
+.rating-yellow {
+  color: rgb(200, 211, 52);
+  float: right;
+  margin-right: 12px;
+}
+.rating-red {
+  color: rgb(211, 52, 52);
+  float: right;
+  margin-right: 12px;
+}
+.rating-null {
+  color: #ebebeb;
+  float: right;
+  margin-right: 12px;
+}
+</style>

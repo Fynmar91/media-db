@@ -161,6 +161,19 @@ mediadb.setType = (id, status) => {
   });
 };
 
+//set rating
+mediadb.setRating = (id, rating) => {
+  return new Promise((resolve, reject) => {
+    pool.query(`UPDATE media SET rating = ? WHERE media_id = ?`, [rating, id], (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      mediadb.log("Update rating of media: " + id + "  to: " + rating + " " + JSON.stringify(results));
+      return resolve(results);
+    });
+  });
+};
+
 //Types
 //get all types
 mediadb.getTypes = (id) => {
