@@ -53,6 +53,11 @@
           </div>
         </ul>
         <div class="card-body">
+          <a href="#" @click="toggleHistAdd" class="card-link">Neuer Eintrag</a>
+          <a href="#" @click="togglePropAdd" class="card-link">Neues Datenfeld</a>
+          <a :href="infoLink(type_id)" target="_blank" class="card-link">Info</a>
+        </div>
+        <div class="card-footer text-muted">
           <div @dblclick="click_rating">
             <div>
               <select v-if="edit_rating" @change="change_rating($event)" style="float: right;">
@@ -64,11 +69,6 @@
               <a v-else href="#" class="card-link" :class="ratingClass(media.rating)">▮▮▮</a>
             </div>
           </div>
-          <a href="#" @click="toggleHistAdd" class="card-link">Neuer Eintrag</a>
-          <a href="#" @click="togglePropAdd" class="card-link">Neues Datenfeld</a>
-          <a :href="infoLink(type_id)" target="_blank" class="card-link">Info</a>
-        </div>
-        <div class="card-footer text-muted">
           {{ date }}
         </div>
       </div>
@@ -324,21 +324,17 @@ export default {
 .rating-green {
   color: rgb(78, 211, 52);
   float: right;
-  margin-right: 12px;
 }
 .rating-yellow {
   color: rgb(200, 211, 52);
   float: right;
-  margin-right: 12px;
 }
 .rating-red {
   color: rgb(211, 52, 52);
   float: right;
-  margin-right: 12px;
 }
 .rating-null {
   color: #ebebeb;
   float: right;
-  margin-right: 12px;
 }
 </style>
