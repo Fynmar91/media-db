@@ -217,7 +217,6 @@ export default {
     },
     change_rating(event) {
       if (event.target.value != "" && event.target.value != this.media.rating) {
-        console.log(event.target.value);
         axios
           .put("http://" + process.env.VUE_APP_APIURL + "/api/media/update/rating/" + this.media.media_id + "/" + event.target.value)
           .then((response) => {
@@ -226,7 +225,6 @@ export default {
             } else {
               console.log(response);
             }
-            console.log(response.status);
           })
           .catch((error) => {
             console.log(error);
@@ -247,7 +245,6 @@ export default {
           this.date = this.media.created.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, "$3.$2.$1");
           this.type = response.data.type;
           this.status = response.data.status;
-          console.log(this.media.rating);
           axios
             .get("http://" + process.env.VUE_APP_APIURL + "/api/history/" + this.media.media_id)
             .then((response) => {
