@@ -45,7 +45,7 @@ mediadb.log = (message) => {
 mediadb.getAll = () => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year,  
+      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.rating,
       type.type_id, type.name AS type, 
       status.status_id, status.name AS status,
       CASE WHEN h.date IS NOT NULL THEN h.date ELSE media.created END AS created
@@ -67,7 +67,7 @@ mediadb.getAll = () => {
 mediadb.getAllByType = (type) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year,  
+      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.rating,
         type.type_id, type.name AS type, 
         status.status_id, status.name AS status,
         CASE WHEN h.date IS NOT NULL THEN h.date ELSE media.created END AS created
@@ -91,7 +91,7 @@ mediadb.getAllByType = (type) => {
 mediadb.getOne = (id) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.created, 
+      `SELECT media.media_id, media.name, media.altname, media.altname, media.addition, media.year, media.created, media.rating, 
         type.type_id, type.name AS type, 
         status.status_id, status.name AS status 
         FROM media 

@@ -12,7 +12,13 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: "Lato";
+  src: local("Lato"), url(./fonts/Lato/Lato-Regular.ttf) format("truetype");
+}
+
 body {
+  font-family: "Lato", Helvetica, Arial;
   background-color: #202326;
 }
 .card {

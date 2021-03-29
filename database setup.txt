@@ -12,6 +12,7 @@ addition varchar(24),
 year varchar(12),
 type int,
 status int,
+rating int,
 created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,     
 PRIMARY KEY (media_id) );
 
@@ -23,6 +24,8 @@ UPDATE media SET status = 2, type = null WHERE media_id = 4;
 UPDATE media SET status = ? WHERE media_id = ?;
 ALTER TABLE media
 ADD addition varchar(24); 
+ALTER TABLE media
+ADD rating int; 
 
 CREATE TABLE type (     
 type_id int NOT NULL AUTO_INCREMENT,     

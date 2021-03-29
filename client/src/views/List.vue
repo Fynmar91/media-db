@@ -32,7 +32,7 @@
         </div>
         <div class="row justify-content-center">
           <div class="form-group" style="width: 100%; max-width: 600px;">
-            <input class="form-control form-control-sm" @keyup.enter.native="searchM" v-model="search" type="text" placeholder="Suche" id="inputSmall" />
+            <input class="form-control form-control-sm" @keyup.enter="searchM" v-model="search" type="text" placeholder="Suche" id="inputSmall" />
           </div>
         </div>
         <div class="row justify-content-center">
@@ -43,19 +43,23 @@
             </button>
           </div>
         </div>
-        <table class="table table-hover w-auto mx-auto">
+        <table class="table table-hover w-auto mx-auto" style="width: 100%; max-width: 600px;">
           <thead>
+            <th class="rating-header"></th>
             <th @click="sort('name')">Name</th>
             <th @click="sort('addition')" v-if="setRenderAddition">Staffel</th>
             <th @click="sort('year')">Jahr</th>
             <th @click="sort('status')">Status</th>
+            <th class="rating-header"></th>
           </thead>
           <tbody>
             <tr v-for="item in sortedMedia" @click="onRowClick(item.media_id)" :key="item.media_id">
+              <td class="rating-red"></td>
               <td class="align-middle">{{ item.name }}</td>
               <td class="align-middle" v-if="setRenderAddition">{{ item.addition }}</td>
               <td class="align-middle">{{ item.year }}</td>
               <td class="align-middle">{{ item.status }}</td>
+              <td class="rating-red"></td>
             </tr>
           </tbody>
         </table>
@@ -167,4 +171,28 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.rating-green {
+  width: 3px;
+  padding: 0;
+  background-color: rgb(78, 211, 52);
+}
+.rating-yellow {
+  width: 3px;
+  padding: 0;
+  background-color: rgb(200, 211, 52);
+}
+.rating-red {
+  width: 3px;
+  padding: 0;
+  background-color: rgb(211, 52, 52);
+}
+.rating-null {
+  width: 3px;
+  padding: 0;
+  background-color: rgba(211, 52, 52, 0);
+}
+.rating-header {
+  padding: 0;
+}
+</style>
