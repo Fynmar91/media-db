@@ -145,7 +145,7 @@ router.put("/media/update/type/:id/:type", async (req, res) => {
 //update rating
 router.put("/media/update/rating/:id/:rating", async (req, res) => {
   try {
-    await db.setType(req.params.id, req.params.rating);
+    await db.setRating(req.params.id, req.params.rating);
     res.sendStatus(200);
   } catch (error) {
     console.log(error);

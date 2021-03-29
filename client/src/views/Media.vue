@@ -57,11 +57,11 @@
             <div>
               <select v-if="edit_rating" @change="change_rating($event)" style="float: right;">
                 <option key="null" :value="null" selected></option>
-                <option key="0" :value="0" selected>0</option>
-                <option key="50" :value="50" selected>50</option>
-                <option key="100" :value="100" selected>100</option>
+                <option key="0" :value="0" :selected="0 == media.rating">0</option>
+                <option key="50" :value="50" :selected="50 == media.rating">50</option>
+                <option key="100" :value="100" :selected="100 == media.rating">100</option>
               </select>
-              <a v-else href="#" class="card-link" :class="ratingClass(media.rating)"> ▮▮▮ </a>
+              <a v-else href="#" class="card-link" :class="ratingClass(media.rating)">▮▮▮</a>
             </div>
           </div>
           <a href="#" @click="toggleHistAdd" class="card-link">Neuer Eintrag</a>
@@ -217,14 +217,16 @@ export default {
     },
     change_rating(event) {
       if (event.target.value != "" && event.target.value != this.media.rating) {
+        console.log(event.target.value);
         axios
-          .put("http://" + process.env.VUE_APP_APIURL + "/api/media/update/rating/" + this.media.media_id + "/" + event.target.rating)
+          .put("http://" + process.env.VUE_APP_APIURL + "/api/media/update/rating/" + this.media.media_id + "/" + event.target.value)
           .then((response) => {
             if (response.status == 200) {
               this.update();
             } else {
               console.log(response);
             }
+            console.log(response.status);
           })
           .catch((error) => {
             console.log(error);
@@ -245,6 +247,7 @@ export default {
           this.date = this.media.created.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, "$3.$2.$1");
           this.type = response.data.type;
           this.status = response.data.status;
+          console.log(this.media.rating);
           axios
             .get("http://" + process.env.VUE_APP_APIURL + "/api/history/" + this.media.media_id)
             .then((response) => {
