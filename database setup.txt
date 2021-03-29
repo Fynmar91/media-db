@@ -22,6 +22,7 @@ INSERT INTO media (name, altname, year, type) VALUES ("Test", "no status", 1995,
 INSERT INTO media (name, altname, year, status) VALUES ("Test", "no type", 1995, 2);
 UPDATE media SET status = 2, type = null WHERE media_id = 4;
 UPDATE media SET status = ? WHERE media_id = ?;
+UPDATE media SET rating = 0 WHERE media_id = 346;
 ALTER TABLE media
 ADD addition varchar(24); 
 ALTER TABLE media

@@ -54,12 +54,12 @@
           </thead>
           <tbody>
             <tr v-for="item in sortedMedia" @click="onRowClick(item.media_id)" :key="item.media_id">
-              <td class="rating-red"></td>
+              <td :class="ratingClass(item.rating)"></td>
               <td class="align-middle">{{ item.name }}</td>
               <td class="align-middle" v-if="setRenderAddition">{{ item.addition }}</td>
               <td class="align-middle">{{ item.year }}</td>
               <td class="align-middle">{{ item.status }}</td>
-              <td class="rating-red"></td>
+              <td :class="ratingClass(item.rating)"></td>
             </tr>
           </tbody>
         </table>
@@ -131,6 +131,18 @@ export default {
     },
   },
   methods: {
+    ratingClass(rating) {
+      switch (rating) {
+        case 100:
+          return "rating-green";
+        case 50:
+          return "rating-yellow";
+        case 0:
+          return "rating-red";
+        default:
+          return "rating-null";
+      }
+    },
     onRowClick(id) {
       this.$router.push({ path: "/media/" + id });
     },
