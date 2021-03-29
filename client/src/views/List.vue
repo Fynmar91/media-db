@@ -144,7 +144,7 @@ export default {
       }
     },
     onRowClick(id) {
-      this.$router.push({ path: "/media/" + id });
+      this.$router.push({ name: "Media", params: { source_type: this.type, id: id } });
     },
     sort: function(s) {
       if (s === this.currentSort) {

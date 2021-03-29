@@ -19,7 +19,7 @@ const routes = [
   },
   {
     name: "Media",
-    path: "/media/:id",
+    path: "/media/:source_type/:id",
     component: Media,
     props: true,
   },
