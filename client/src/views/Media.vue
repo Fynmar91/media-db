@@ -63,10 +63,15 @@
               <select v-if="edit_rating" @change="change_rating($event)" style="float: right;">
                 <option key="null" :value="null" selected></option>
                 <option key="0" :value="0" :selected="0 == media.rating">0</option>
+                <option key="25" :value="25" :selected="25 == media.rating">25</option>
                 <option key="50" :value="50" :selected="50 == media.rating">50</option>
+                <option key="75" :value="75" :selected="75 == media.rating">75</option>
                 <option key="100" :value="100" :selected="100 == media.rating">100</option>
               </select>
-              <a v-else href="#" class="card-link" :class="ratingClass(media.rating)">▮▮▮</a>
+              <div v-else>
+                <a href="#" class="card-link" :class="ratingClass(media.rating)">||||||</a>
+                <a href="#" class="card-link" :class="ratingClass2(media.rating)">||||||</a>
+              </div>
             </div>
           </div>
           {{ date }}
@@ -134,6 +139,22 @@ export default {
       switch (rating) {
         case 100:
           return "rating-green";
+        case 50:
+        case 75:
+          return "rating-yellow";
+        case 0:
+        case 25:
+          return "rating-red";
+        default:
+          return "rating-null";
+      }
+    },
+    ratingClass2(rating) {
+      switch (rating) {
+        case 75:
+        case 100:
+          return "rating-green";
+        case 25:
         case 50:
           return "rating-yellow";
         case 0:

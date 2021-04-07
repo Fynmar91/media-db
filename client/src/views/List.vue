@@ -136,8 +136,10 @@ export default {
         case 100:
           return "rating-green";
         case 50:
+        case 75:
           return "rating-yellow";
         case 0:
+        case 25:
           return "rating-red";
         default:
           return "rating-null";
