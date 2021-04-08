@@ -69,8 +69,7 @@
                 <option key="100" :value="100" :selected="100 == media.rating">100</option>
               </select>
               <div v-else>
-                <a href="#" class="card-link" :class="ratingClass(media.rating)">||||||</a>
-                <a href="#" class="card-link" :class="ratingClass2(media.rating)">||||||</a>
+                <a href="#" class="card-link" :class="ratingClass(media.rating)">{{ media.rating }}%</a>
               </div>
             </div>
           </div>
@@ -138,25 +137,13 @@ export default {
     ratingClass(rating) {
       switch (rating) {
         case 100:
+          return "rating-cyan";
+        case 75:
           return "rating-green";
         case 50:
-        case 75:
           return "rating-yellow";
-        case 0:
         case 25:
-          return "rating-red";
-        default:
-          return "rating-null";
-      }
-    },
-    ratingClass2(rating) {
-      switch (rating) {
-        case 75:
-        case 100:
-          return "rating-green";
-        case 25:
-        case 50:
-          return "rating-yellow";
+          return "rating-orange";
         case 0:
           return "rating-red";
         default:
@@ -343,12 +330,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.rating-cyan {
+  color: rgb(52, 211, 190);
+  float: right;
+}
 .rating-green {
   color: rgb(78, 211, 52);
   float: right;
 }
 .rating-yellow {
-  color: rgb(200, 211, 52);
+  color: rgb(221, 235, 27);
+  float: right;
+}
+.rating-orange {
+  color: rgb(223, 152, 21);
   float: right;
 }
 .rating-red {
