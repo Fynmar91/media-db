@@ -137,15 +137,15 @@ export default {
     ratingClass(rating) {
       switch (rating) {
         case 100:
-          return "rating-cyan";
+          return "rating-100";
         case 75:
-          return "rating-green";
+          return "rating-75";
         case 50:
-          return "rating-yellow";
+          return "rating-50";
         case 25:
-          return "rating-orange";
+          return "rating-25";
         case 0:
-          return "rating-red";
+          return "rating-0";
         default:
           return "rating-null";
       }
@@ -330,24 +330,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.rating-cyan {
-  color: rgb(52, 211, 190);
+.rating-100 {
+  color: rgb(230, 227, 78);
   float: right;
 }
-.rating-green {
-  color: rgb(78, 211, 52);
+.rating-75 {
+  color: rgb(166, 87, 219);
   float: right;
 }
-.rating-yellow {
-  color: rgb(221, 235, 27);
+.rating-50 {
+  color: rgb(74, 109, 221);
   float: right;
 }
-.rating-orange {
-  color: rgb(223, 152, 21);
+.rating-25 {
+  color: rgb(95, 223, 83);
   float: right;
 }
-.rating-red {
-  color: rgb(211, 52, 52);
+.rating-0 {
+  color: rgb(241, 241, 241);
   float: right;
 }
 .rating-null {
